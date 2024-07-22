@@ -1,0 +1,83 @@
+definitions:
+  main.ErrorResponse:
+    properties:
+      error:
+        example: Bad Request
+        type: string
+    type: object
+  main.Item:
+    properties:
+      id:
+        example: 1
+        type: integer
+      name:
+        example: Item One
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /items:
+    get:
+      description: Get all items in the system
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Item'
+            type: array
+      summary: Get all items
+      tags:
+      - items
+    post:
+      consumes:
+      - application/json
+      description: Create a new item in the system
+      parameters:
+      - description: New Item
+        in: body
+        name: item
+        required: true
+        schema:
+          $ref: '#/definitions/main.Item'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.Item'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      summary: Create new item
+      tags:
+      - items
+  /items/{id}:
+    get:
+      description: Get a single item by ID
+      parameters:
+      - description: Item ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Item'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      summary: Get item by ID
+      tags:
+      - items
+swagger: "2.0"
