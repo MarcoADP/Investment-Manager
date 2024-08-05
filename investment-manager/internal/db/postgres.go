@@ -2,14 +2,13 @@ package db
 
 import (
 	"context"
-	"database/sql"
-	"fmt"
-	"log"
 	"os"
 
-	_ "github.com/lib/pq"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
+/*
 func Connect(ctx context.Context) (*sql.DB, error) {
 
 	dbHost := os.Getenv("DB_HOST")
@@ -46,4 +45,25 @@ func Connect(ctx context.Context) (*sql.DB, error) {
 
 	return db, nil
 
+}
+*/
+
+type Config struct {
+	DatabaseURL string
+}
+
+func LoadConfig(ctx context.Context) *Config {
+	cfg := &Config{
+		DatabaseURL: os.Getenv("DB_URL"),
+	}
+
+	return cfg
+}
+
+func ConnectDatabase(cfg *Config) (*gorm.DB, error) {
+	db, err := gorm.Open(postgres.Open(cfg.DatabaseURL), &gorm.Config{})
+	if err != nil {
+		return nil, err
+	}
+	return db, nil
 }

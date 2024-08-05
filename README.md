@@ -3,7 +3,7 @@
 - https://go.dev/doc/modules/layout
 - https://github.com/golang-standards/project-layout
 - https://medium.com/golang-learn/go-project-layout-e5213cdcfaa2
-- 
+- https://gist.github.com/ayoubzulfiqar/9f1a34049332711fddd4d4b2bfd46096
 
 Packages:
 

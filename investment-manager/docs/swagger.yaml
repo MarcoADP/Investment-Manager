@@ -1,25 +1,76 @@
 definitions:
-  main.ErrorResponse:
+  github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse:
     properties:
       error:
         example: Bad Request
         type: string
     type: object
-  main.Item:
+  github_com_MarcoADP_Investment-Manager_pkg_api_v1_request.AcaoBrRequest:
     properties:
+      cnpj:
+        type: string
+      codigo:
+        type: string
+      nome:
+        type: string
+      setor:
+        type: string
+    type: object
+  github_com_MarcoADP_Investment-Manager_pkg_api_v1_request.FundoImobiliarioRequest:
+    properties:
+      cnpj:
+        type: string
+      codigo:
+        type: string
+      nome:
+        type: string
+      segmento:
+        type: string
+      tipo:
+        type: string
+    type: object
+  github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.AcaoBrResponse:
+    properties:
+      cnpj:
+        type: string
+      codigo:
+        type: string
       id:
-        example: 1
         type: integer
-      name:
-        example: Item One
+      nome:
+        type: string
+      setor:
+        type: string
+    type: object
+  github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.FundoImobiliarioResponse:
+    properties:
+      cnpj:
+        type: string
+      codigo:
+        type: string
+      id:
+        type: integer
+      nome:
+        type: string
+      segmento:
+        type: string
+      tipo:
+        type: string
+    type: object
+  pkg_api_v1.ErrorResponse:
+    properties:
+      error:
+        example: Bad Request
         type: string
     type: object
 info:
   contact: {}
 paths:
-  /items:
+  /api/v1/acoes:
     get:
-      description: Get all items in the system
+      consumes:
+      - application/json
+      description: Get All Ação BR
       produces:
       - application/json
       responses:
@@ -27,41 +78,79 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/main.Item'
+              $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.AcaoBrResponse'
             type: array
-      summary: Get all items
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+      summary: Get All Acão BR
       tags:
-      - items
+      - acoes
     post:
       consumes:
       - application/json
-      description: Create a new item in the system
+      description: Create a new acao
       parameters:
-      - description: New Item
+      - description: AcaoBrRequest info
         in: body
-        name: item
+        name: acao
         required: true
         schema:
-          $ref: '#/definitions/main.Item'
+          $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_request.AcaoBrRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/main.Item'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.AcaoBrResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+      summary: Create a acao
+      tags:
+      - acoes
+  /api/v1/acoes/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a acao by ID
+      parameters:
+      - description: AcaoBr ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/main.ErrorResponse'
-      summary: Create new item
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+      summary: Delete a acao
       tags:
-      - items
-  /items/{id}:
+      - acoes
     get:
-      description: Get a single item by ID
+      consumes:
+      - application/json
+      description: Get a Ação BR by ID
       parameters:
-      - description: Item ID
+      - description: AcaoBr ID
         in: path
         name: id
         required: true
@@ -72,12 +161,191 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/main.Item'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.AcaoBrResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/main.ErrorResponse'
-      summary: Get item by ID
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+      summary: Get a Acão BR
       tags:
-      - items
+      - acoes
+    put:
+      consumes:
+      - application/json
+      description: Update a acao by ID
+      parameters:
+      - description: AcaoBr ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: AcaoBrRequest info
+        in: body
+        name: acao
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_request.AcaoBrRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.AcaoBrResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+      summary: Update a acao
+      tags:
+      - acoes
+  /api/v1/fundos-imobiliarios:
+    get:
+      consumes:
+      - application/json
+      description: Get All Fundos Imobiliarios
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.FundoImobiliarioResponse'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+      summary: Get All Fundos Imobiliarios
+      tags:
+      - fundos-imobiliarios
+    post:
+      consumes:
+      - application/json
+      description: Create a new Fundo Imobiliario
+      parameters:
+      - description: FundoImobiliarioRequest info
+        in: body
+        name: fundoImobiliario
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_request.FundoImobiliarioRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.FundoImobiliarioResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+      summary: Create a Fundo Imobiliario
+      tags:
+      - fundos-imobiliarios
+  /api/v1/fundos-imobiliarios/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a Fundo Imobiliario by ID
+      parameters:
+      - description: FundoImobiliario ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+      summary: Delete a Fundo Imobiliario
+      tags:
+      - fundos-imobiliarios
+    get:
+      consumes:
+      - application/json
+      description: Get a Fundo Imobiliario by ID
+      parameters:
+      - description: FundoImobiliario ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.FundoImobiliarioResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+      summary: Get a Fundo Imobiliario
+      tags:
+      - fundos-imobiliarios
+    put:
+      consumes:
+      - application/json
+      description: Update a Fundo Imobiliario by ID
+      parameters:
+      - description: FundoImobiliario ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: FundoImobiliarioRequest info
+        in: body
+        name: fundoImobiliario
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_request.FundoImobiliarioRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.FundoImobiliarioResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+      summary: Update a Fundo Imobiliario
+      tags:
+      - fundos-imobiliarios
 swagger: "2.0"
