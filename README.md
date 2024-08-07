@@ -12,3 +12,7 @@ Packages:
 - **/pkg:** Library code that's ok to use by external applications (e.g., /pkg/db/repository).
 - **/vendor:** Application dependencies (managed manually or by your favorite dependency management tool like the new built-in Go Modules feature). The go mod vendor command will create the /vendor directory for you.
 
+Commands:
+-- **flyway migrate**: Install BD scripts
+-- **swag init --parseDependency --parseInternal --parseDependencyLevel 2 -g .\cmd\investment-manager\investment-manager.go**: Create Swagger Docs
+-- **go run .\cmd\investment-manager\investment-manager.go**: Run Component

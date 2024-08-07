@@ -34,8 +34,8 @@ func NewBdrHandler(bdrService *service.BdrService) *BdrHandler {
 	return &BdrHandler{bdrService: bdrService}
 }
 
-// @Summary Get All Acão BR
-// @Description Get All Ação BR
+// @Summary Get All BDR
+// @Description Get All BDR
 // @Tags bdrs
 // @Accept  json
 // @Produce  json
@@ -51,8 +51,8 @@ func (h *BdrHandler) GetBdrs(c *gin.Context) {
 	c.JSON(http.StatusOK, bdrs)
 }
 
-// @Summary Get a Acão BR
-// @Description Get a Ação BR by ID
+// @Summary Get a BDR
+// @Description Get a BDR by ID
 // @Tags bdrs
 // @Accept  json
 // @Produce  json
