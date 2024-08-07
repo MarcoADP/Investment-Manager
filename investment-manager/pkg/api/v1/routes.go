@@ -26,12 +26,21 @@ func createFundoImobiliarioHandler(
 	return *NewFundoImobiliarioHandler(service)
 }
 
+func createBdrHandler(
+	db *gorm.DB,
+) BdrHandler {
+	repo := repository.NewBdrRepository(db)
+	service := service.NewBdrService(repo)
+	return *NewBdrHandler(service)
+}
+
 func CreateRoutes(db *gorm.DB) *gin.Engine {
 
 	router := gin.Default()
 
 	acaoBrHandler := createAcaoBrHandler(db)
 	fundoImobiliarioBrHandler := createFundoImobiliarioHandler(db)
+	bdrHandler := createBdrHandler(db)
 
 	api := router.Group("/api/v1")
 	{
@@ -46,6 +55,12 @@ func CreateRoutes(db *gorm.DB) *gin.Engine {
 		api.POST("/fundos-imobiliarios", fundoImobiliarioBrHandler.CreateFundoImobiliario)
 		api.PUT("/fundos-imobiliarios/:id", fundoImobiliarioBrHandler.UpdateFundoImobiliario)
 		api.DELETE("/fundos-imobiliarios/:id", fundoImobiliarioBrHandler.DeleteFundoImobiliario)
+
+		api.GET("/bdrs", bdrHandler.GetBdrs)
+		api.GET("/bdrs/:id", bdrHandler.GetBdr)
+		api.POST("/bdrs", bdrHandler.CreateBdr)
+		api.PUT("/bdrs/:id", bdrHandler.UpdateBdr)
+		api.DELETE("/bdrs/:id", bdrHandler.DeleteBdr)
 	}
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

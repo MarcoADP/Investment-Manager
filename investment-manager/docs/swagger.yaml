@@ -16,6 +16,17 @@ definitions:
       setor:
         type: string
     type: object
+  github_com_MarcoADP_Investment-Manager_pkg_api_v1_request.BdrRequest:
+    properties:
+      cnpj:
+        type: string
+      codigo:
+        type: string
+      nome:
+        type: string
+      setor:
+        type: string
+    type: object
   github_com_MarcoADP_Investment-Manager_pkg_api_v1_request.FundoImobiliarioRequest:
     properties:
       cnpj:
@@ -30,6 +41,19 @@ definitions:
         type: string
     type: object
   github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.AcaoBrResponse:
+    properties:
+      cnpj:
+        type: string
+      codigo:
+        type: string
+      id:
+        type: integer
+      nome:
+        type: string
+      setor:
+        type: string
+    type: object
+  github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.BdrResponse:
     properties:
       cnpj:
         type: string
@@ -207,6 +231,147 @@ paths:
       summary: Update a acao
       tags:
       - acoes
+  /api/v1/bdrs:
+    get:
+      consumes:
+      - application/json
+      description: Get All Ação BR
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.BdrResponse'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+      summary: Get All Acão BR
+      tags:
+      - bdrs
+    post:
+      consumes:
+      - application/json
+      description: Create a new bdr
+      parameters:
+      - description: BdrRequest info
+        in: body
+        name: bdr
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_request.BdrRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.BdrResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+      summary: Create a bdr
+      tags:
+      - bdrs
+  /api/v1/bdrs/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a bdr by ID
+      parameters:
+      - description: Bdr ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+      summary: Delete a bdr
+      tags:
+      - bdrs
+    get:
+      consumes:
+      - application/json
+      description: Get a Ação BR by ID
+      parameters:
+      - description: Bdr ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.BdrResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+      summary: Get a Acão BR
+      tags:
+      - bdrs
+    put:
+      consumes:
+      - application/json
+      description: Update a bdr by ID
+      parameters:
+      - description: Bdr ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: BdrRequest info
+        in: body
+        name: bdr
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_request.BdrRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.BdrResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+      summary: Update a bdr
+      tags:
+      - bdrs
   /api/v1/fundos-imobiliarios:
     get:
       consumes:
@@ -224,7 +389,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get All Fundos Imobiliarios
       tags:
       - fundos-imobiliarios
@@ -249,11 +414,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Create a Fundo Imobiliario
       tags:
       - fundos-imobiliarios
@@ -278,11 +443,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Delete a Fundo Imobiliario
       tags:
       - fundos-imobiliarios
@@ -306,7 +471,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get a Fundo Imobiliario
       tags:
       - fundos-imobiliarios
@@ -336,15 +501,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Update a Fundo Imobiliario
       tags:
       - fundos-imobiliarios

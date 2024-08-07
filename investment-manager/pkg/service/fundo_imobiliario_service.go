@@ -28,6 +28,10 @@ func (s *FundoImobiliarioService) GetAllFundosImobiliarios() ([]response.FundoIm
 		fundosImobiliariosResponse = append(fundosImobiliariosResponse, mapper.ToFundoImobiliarioResponse(value))
 	}
 
+	if fundosImobiliariosResponse == nil {
+		fundosImobiliariosResponse = []response.FundoImobiliarioResponse{}
+	}
+
 	return fundosImobiliariosResponse, err
 }
 

@@ -28,6 +28,10 @@ func (s *AcaoBrService) GetAllAcaoBrs() ([]response.AcaoBrResponse, error) {
 		acoesResponse = append(acoesResponse, mapper.ToAcaoBrResponse(value))
 	}
 
+	if acoesResponse == nil {
+		acoesResponse = []response.AcaoBrResponse{}
+	}
+
 	return acoesResponse, err
 }
 
