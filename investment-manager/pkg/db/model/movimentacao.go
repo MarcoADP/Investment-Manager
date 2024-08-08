@@ -10,7 +10,7 @@ type Movimentacao struct {
 	Operacao      string    `gorm:"column:operacao"`
 	Codigo        string    `gorm:"column:codigo"`
 	TipoAtivo     string    `gorm:"column:tipo_ativo"`
-	Quantidade    int       `gorm:"column:quantidade"`
+	Quantidade    float64   `gorm:"column:quantidade"`
 	ValorUnitario float64   `gorm:"column:valor_unitario"`
 	ValorTotal    float64   `gorm:"column:valor_total"`
 }
@@ -19,7 +19,7 @@ func (Movimentacao) TableName() string {
 	return "movimentacao"
 }
 
-func NewMovimentacao(data time.Time, operacao string, codigo string, tipoAtivo string, quantidade int, valorUnitario float64) *Movimentacao {
+func NewMovimentacao(data time.Time, operacao string, codigo string, tipoAtivo string, quantidade float64, valorUnitario float64) *Movimentacao {
 	return &Movimentacao{
 		Data:          data,
 		Operacao:      operacao,

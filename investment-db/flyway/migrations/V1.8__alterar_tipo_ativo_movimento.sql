@@ -1,0 +1,1 @@
+ALTER TABLE public.movimentacao ALTER COLUMN tipo_ativo TYPE varchar(32) USING tipo_ativo::varchar(32);
