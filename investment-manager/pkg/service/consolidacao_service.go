@@ -63,6 +63,7 @@ func (s *ConsolidacaoService) GenerateConsolidacoes() ([]response.ConsolidacaoRe
 		valorSaida := 0.0
 		var tipoAtivo string
 		for _, movimentacao := range movimentacoes {
+			tipoAtivo = movimentacao.TipoAtivo
 			if movimentacao.Operacao == "ENTRADA" {
 				qtdEntrada = qtdEntrada + movimentacao.Quantidade
 				valorEntrada = valorEntrada + movimentacao.ValorTotal
