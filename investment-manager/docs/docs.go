@@ -441,6 +441,114 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/consolidacoes": {
+            "get": {
+                "description": "Get All consolidacao BR",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "consolidacoes"
+                ],
+                "summary": "Get All consolidacao BR",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ConsolidacaoResponse"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/consolidacoes/calcular": {
+            "post": {
+                "description": "Calcular a consolidacao",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "consolidacoes"
+                ],
+                "summary": "Calcular a consolidacao",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ConsolidacaoResponse"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/consolidacoes/{codigo}": {
+            "get": {
+                "description": "Get a consolidacao BR by Codigo",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "consolidacoes"
+                ],
+                "summary": "Get a consolidacao BR",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Consolidacao Codigo",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ConsolidacaoResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/fundos-imobiliarios": {
             "get": {
                 "description": "Get All Fundos Imobiliarios",
@@ -467,7 +575,7 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -505,13 +613,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -549,7 +657,7 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -594,19 +702,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -642,13 +750,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -941,7 +1049,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "quantidade": {
-                    "type": "integer"
+                    "type": "number"
                 },
                 "tipoAtivo": {
                     "type": "string"
@@ -991,6 +1099,44 @@ const docTemplate = `{
                 }
             }
         },
+        "github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ConsolidacaoResponse": {
+            "type": "object",
+            "properties": {
+                "codigo": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "lucroMedio": {
+                    "type": "number"
+                },
+                "lucroProporcao": {
+                    "type": "number"
+                },
+                "quantidadeEntrada": {
+                    "type": "number"
+                },
+                "quantidadeSaida": {
+                    "type": "number"
+                },
+                "tipoAtivo": {
+                    "type": "string"
+                },
+                "valorMedioEntrada": {
+                    "type": "number"
+                },
+                "valorMedioSaida": {
+                    "type": "number"
+                },
+                "valorTotalEntrada": {
+                    "type": "number"
+                },
+                "valorTotalSaida": {
+                    "type": "number"
+                }
+            }
+        },
         "github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.FundoImobiliarioResponse": {
             "type": "object",
             "properties": {
@@ -1030,7 +1176,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "quantidade": {
-                    "type": "integer"
+                    "type": "number"
                 },
                 "tipoAtivo": {
                     "type": "string"

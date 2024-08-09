@@ -42,6 +42,16 @@ func createMovimentacaoHandler(
 	return *NewMovimentacaoHandler(service)
 }
 
+func createConsolidacaoHandler(
+	db *gorm.DB,
+) ConsolidacaoHandler {
+	repo := repository.NewConsolidacaoRepository(db)
+	movRepo := repository.NewMovimentacaoRepository(db)
+	movService := service.NewMovimentacaoService(movRepo)
+	service := service.NewConsolidacaoService(repo, movService)
+	return *NewConsolidacaoHandler(service)
+}
+
 func CreateRoutes(db *gorm.DB) *gin.Engine {
 
 	router := gin.Default()
@@ -50,6 +60,7 @@ func CreateRoutes(db *gorm.DB) *gin.Engine {
 	fundoImobiliarioBrHandler := createFundoImobiliarioHandler(db)
 	bdrHandler := createBdrHandler(db)
 	movimentacaoHandler := createMovimentacaoHandler(db)
+	consolidacaoHandler := createConsolidacaoHandler(db)
 
 	api := router.Group("/api/v1")
 	{
@@ -76,6 +87,10 @@ func CreateRoutes(db *gorm.DB) *gin.Engine {
 		api.POST("/movimentacoes/entrada", movimentacaoHandler.CreateMovimentacaoEntrada)
 		api.POST("/movimentacoes/saida", movimentacaoHandler.CreateMovimentacaoSaida)
 		api.DELETE("/movimentacoes/:id", movimentacaoHandler.DeleteMovimentacao)
+
+		api.GET("/consolidacoes", consolidacaoHandler.GetConsolidacoes)
+		api.GET("/consolidacoes/:codigo", consolidacaoHandler.GetConsolidacao)
+		api.POST("/consolidacoes/calcular", consolidacaoHandler.CalcularConsolidacoes)
 	}
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

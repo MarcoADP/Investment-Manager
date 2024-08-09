@@ -79,3 +79,18 @@ func (s *MovimentacaoService) CreateMovimentacao(movimentacaoRequest request.Mov
 func (s *MovimentacaoService) DeleteMovimentacao(id uint) error {
 	return s.repo.DeleteMovimentacao(id)
 }
+
+func (s *MovimentacaoService) GetMovimentacoesGroupedByCodigo() (map[string][]response.MovimentacaoResponse, error) {
+	movimentacoesAgrupados := make(map[string][]response.MovimentacaoResponse)
+	movimentacoes, err := s.GetAllMovimentacoes()
+
+	if err != nil {
+		return movimentacoesAgrupados, err
+	}
+
+	for _, movimentacao := range movimentacoes {
+		movimentacoesAgrupados[movimentacao.Codigo] = append(movimentacoesAgrupados[movimentacao.Codigo], movimentacao)
+	}
+
+	return movimentacoesAgrupados, err
+}

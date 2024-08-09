@@ -47,7 +47,7 @@ definitions:
       data:
         type: string
       quantidade:
-        type: integer
+        type: number
       tipoAtivo:
         type: string
       valorUnitario:
@@ -79,6 +79,31 @@ definitions:
       setor:
         type: string
     type: object
+  github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ConsolidacaoResponse:
+    properties:
+      codigo:
+        type: string
+      id:
+        type: integer
+      lucroMedio:
+        type: number
+      lucroProporcao:
+        type: number
+      quantidadeEntrada:
+        type: number
+      quantidadeSaida:
+        type: number
+      tipoAtivo:
+        type: string
+      valorMedioEntrada:
+        type: number
+      valorMedioSaida:
+        type: number
+      valorTotalEntrada:
+        type: number
+      valorTotalSaida:
+        type: number
+    type: object
   github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.FundoImobiliarioResponse:
     properties:
       cnpj:
@@ -105,7 +130,7 @@ definitions:
       operacao:
         type: string
       quantidade:
-        type: integer
+        type: number
       tipoAtivo:
         type: string
       valorTotal:
@@ -404,6 +429,77 @@ paths:
       summary: Update a bdr
       tags:
       - bdrs
+  /api/v1/consolidacoes:
+    get:
+      consumes:
+      - application/json
+      description: Get All consolidacao BR
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ConsolidacaoResponse'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+      summary: Get All consolidacao BR
+      tags:
+      - consolidacoes
+  /api/v1/consolidacoes/{codigo}:
+    get:
+      consumes:
+      - application/json
+      description: Get a consolidacao BR by Codigo
+      parameters:
+      - description: Consolidacao Codigo
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ConsolidacaoResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+      summary: Get a consolidacao BR
+      tags:
+      - consolidacoes
+  /api/v1/consolidacoes/calcular:
+    post:
+      consumes:
+      - application/json
+      description: Calcular a consolidacao
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            items:
+              $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ConsolidacaoResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+      summary: Calcular a consolidacao
+      tags:
+      - consolidacoes
   /api/v1/fundos-imobiliarios:
     get:
       consumes:
@@ -421,7 +517,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get All Fundos Imobiliarios
       tags:
       - fundos-imobiliarios
@@ -446,11 +542,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Create a Fundo Imobiliario
       tags:
       - fundos-imobiliarios
@@ -475,11 +571,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Delete a Fundo Imobiliario
       tags:
       - fundos-imobiliarios
@@ -503,7 +599,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get a Fundo Imobiliario
       tags:
       - fundos-imobiliarios
@@ -533,15 +629,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Update a Fundo Imobiliario
       tags:
       - fundos-imobiliarios
