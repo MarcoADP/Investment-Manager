@@ -104,6 +104,17 @@ definitions:
       valorTotalSaida:
         type: number
     type: object
+  github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.CotacaoHistoricoResponse:
+    properties:
+      codigo:
+        type: string
+      data:
+        type: string
+      id:
+        type: integer
+      valor:
+        type: number
+    type: object
   github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.FundoImobiliarioResponse:
     properties:
       cnpj:
@@ -305,7 +316,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
       summary: Get All BDR
       tags:
       - bdrs
@@ -330,11 +341,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
       summary: Create a bdr
       tags:
       - bdrs
@@ -359,11 +370,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
       summary: Delete a bdr
       tags:
       - bdrs
@@ -387,7 +398,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
       summary: Get a BDR
       tags:
       - bdrs
@@ -417,15 +428,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
       summary: Update a bdr
       tags:
       - bdrs
@@ -446,7 +457,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get All consolidacao BR
       tags:
       - consolidacoes
@@ -471,7 +482,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get a consolidacao BR
       tags:
       - consolidacoes
@@ -492,14 +503,142 @@ paths:
         "400":
           description: Bad Request
           schema:
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+      summary: Calcular a consolidacao
+      tags:
+      - consolidacoes
+  /api/v1/cotacoes:
+    get:
+      consumes:
+      - application/json
+      description: Get All cotacao
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.CotacaoHistoricoResponse'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+      summary: Get All cotacao
+      tags:
+      - cotacoes
+    post:
+      consumes:
+      - application/json
+      description: Criar a cotacao
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.CotacaoHistoricoResponse'
+        "400":
+          description: Bad Request
+          schema:
             $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
             $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
-      summary: Calcular a consolidacao
+      summary: Criar a cotacao
       tags:
-      - consolidacoes
+      - cotacoes
+  /api/v1/cotacoes/{codigo}:
+    get:
+      consumes:
+      - application/json
+      description: Get a cotacao by Codigo
+      parameters:
+      - description: Cotacao Codigo
+        in: path
+        name: codigo
+        required: true
+        type: integer
+      - description: data
+        in: query
+        name: data
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.CotacaoHistoricoResponse'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+      summary: Get a cotacao
+      tags:
+      - cotacoes
+  /api/v1/cotacoes/{codigo}/last:
+    get:
+      consumes:
+      - application/json
+      description: Get a cotacao by Codigo
+      parameters:
+      - description: Cotacao Codigo
+        in: path
+        name: codigo
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.CotacaoHistoricoResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+      summary: Get a cotacao
+      tags:
+      - cotacoes
+  /api/v1/cotacoes/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a Cotacao by ID
+      parameters:
+      - description: Cotacao ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+      summary: Delete a Cotacao
+      tags:
+      - cotacoes
   /api/v1/fundos-imobiliarios:
     get:
       consumes:
@@ -517,7 +656,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
       summary: Get All Fundos Imobiliarios
       tags:
       - fundos-imobiliarios
@@ -542,11 +681,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
       summary: Create a Fundo Imobiliario
       tags:
       - fundos-imobiliarios
@@ -571,11 +710,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
       summary: Delete a Fundo Imobiliario
       tags:
       - fundos-imobiliarios
@@ -599,7 +738,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
       summary: Get a Fundo Imobiliario
       tags:
       - fundos-imobiliarios
@@ -629,15 +768,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
       summary: Update a Fundo Imobiliario
       tags:
       - fundos-imobiliarios
@@ -663,7 +802,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get All movimentacao BR
       tags:
       - movimentacoes
@@ -688,11 +827,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Delete a movimentacao
       tags:
       - movimentacoes
@@ -716,7 +855,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get a movimentacao BR
       tags:
       - movimentacoes
@@ -742,11 +881,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Create a movimentacao de entrada
       tags:
       - movimentacoes
@@ -772,11 +911,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Create a movimentacao de saida
       tags:
       - movimentacoes

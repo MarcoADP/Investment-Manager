@@ -52,6 +52,14 @@ func createConsolidacaoHandler(
 	return *NewConsolidacaoHandler(service)
 }
 
+func createCotacaoHistoricoHandler(
+	db *gorm.DB,
+) CotacaoHistoricoHandler {
+	repo := repository.NewCotacaoHistoricoRepository(db)
+	service := service.NewCotacaoHistoricoService(repo)
+	return *NewCotacaoHistoricoHandler(service)
+}
+
 func CreateRoutes(db *gorm.DB) *gin.Engine {
 
 	router := gin.Default()
@@ -61,6 +69,7 @@ func CreateRoutes(db *gorm.DB) *gin.Engine {
 	bdrHandler := createBdrHandler(db)
 	movimentacaoHandler := createMovimentacaoHandler(db)
 	consolidacaoHandler := createConsolidacaoHandler(db)
+	cotacaoHistoricoHandler := createCotacaoHistoricoHandler(db)
 
 	api := router.Group("/api/v1")
 	{
@@ -91,6 +100,12 @@ func CreateRoutes(db *gorm.DB) *gin.Engine {
 		api.GET("/consolidacoes", consolidacaoHandler.GetConsolidacoes)
 		api.GET("/consolidacoes/:codigo", consolidacaoHandler.GetConsolidacao)
 		api.POST("/consolidacoes/calcular", consolidacaoHandler.CalcularConsolidacoes)
+
+		api.GET("/cotacoes", cotacaoHistoricoHandler.GetAllCotacoes)
+		api.GET("/cotacoes/:codigo", cotacaoHistoricoHandler.GetCotacoesByCodigo)
+		api.GET("/cotacoes/:codigo/last", cotacaoHistoricoHandler.GetCotacaoMoreRecentByCodigo)
+		api.POST("/cotacoes", cotacaoHistoricoHandler.CreateCotacao)
+		api.DELETE("/cotacoes/:id", cotacaoHistoricoHandler.DeleteCotacao)
 	}
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
