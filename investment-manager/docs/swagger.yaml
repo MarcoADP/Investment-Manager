@@ -27,6 +27,22 @@ definitions:
       setor:
         type: string
     type: object
+  github_com_MarcoADP_Investment-Manager_pkg_api_v1_request.CarteiraAtivoRequest:
+    properties:
+      codigo:
+        type: string
+      proporcaoDesejada:
+        type: number
+    type: object
+  github_com_MarcoADP_Investment-Manager_pkg_api_v1_request.CarteiraRequest:
+    properties:
+      descricao:
+        type: string
+      nome:
+        type: string
+      proporcaoDesejada:
+        type: number
+    type: object
   github_com_MarcoADP_Investment-Manager_pkg_api_v1_request.FundoImobiliarioRequest:
     properties:
       cnpj:
@@ -78,6 +94,30 @@ definitions:
         type: string
       setor:
         type: string
+    type: object
+  github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.CarteiraAtivoResponse:
+    properties:
+      codigo:
+        type: string
+      id:
+        type: integer
+      proporcaoDesejada:
+        type: number
+    type: object
+  github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.CarteiraResponse:
+    properties:
+      ativos:
+        items:
+          $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.CarteiraAtivoResponse'
+        type: array
+      descricao:
+        type: string
+      id:
+        type: integer
+      nome:
+        type: string
+      proporcaoDesejada:
+        type: number
     type: object
   github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ConsolidacaoResponse:
     properties:
@@ -175,7 +215,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get All Acão BR
       tags:
       - acoes
@@ -200,11 +240,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Create a acao
       tags:
       - acoes
@@ -229,11 +269,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Delete a acao
       tags:
       - acoes
@@ -257,7 +297,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get a Acão BR
       tags:
       - acoes
@@ -287,15 +327,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Update a acao
       tags:
       - acoes
@@ -316,7 +356,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get All BDR
       tags:
       - bdrs
@@ -341,11 +381,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Create a bdr
       tags:
       - bdrs
@@ -370,11 +410,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Delete a bdr
       tags:
       - bdrs
@@ -398,7 +438,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get a BDR
       tags:
       - bdrs
@@ -428,6 +468,147 @@ paths:
         "400":
           description: Bad Request
           schema:
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+      summary: Update a bdr
+      tags:
+      - bdrs
+  /api/v1/carteiras:
+    get:
+      consumes:
+      - application/json
+      description: Get All Carteiras
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.CarteiraResponse'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+      summary: Get All Carteiras
+      tags:
+      - carteiras
+    post:
+      consumes:
+      - application/json
+      description: Create a new carteira
+      parameters:
+      - description: CarteiraRequest info
+        in: body
+        name: carteira
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_request.CarteiraRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.CarteiraResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+      summary: Create a carteira
+      tags:
+      - carteiras
+  /api/v1/carteiras/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a carteira by ID
+      parameters:
+      - description: Carteira ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+      summary: Delete a carteira
+      tags:
+      - carteiras
+    get:
+      consumes:
+      - application/json
+      description: Get a Carteira by ID
+      parameters:
+      - description: Carteira ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.CarteiraResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+      summary: Get a Carteira
+      tags:
+      - carteiras
+    put:
+      consumes:
+      - application/json
+      description: Update a carteira by ID
+      parameters:
+      - description: Carteira ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: CarteiraRequest info
+        in: body
+        name: carteira
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_request.CarteiraRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.CarteiraResponse'
+        "400":
+          description: Bad Request
+          schema:
             $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
@@ -437,9 +618,82 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
-      summary: Update a bdr
+      summary: Update a carteira
       tags:
-      - bdrs
+      - carteiras
+  /api/v1/carteiras/{id}/ativo:
+    post:
+      consumes:
+      - application/json
+      description: Add ativo na carteira
+      parameters:
+      - description: Carteira ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: CarteiraAtivoRequest info
+        in: body
+        name: carteira
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_request.CarteiraAtivoRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.CarteiraAtivoResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+      summary: Add ativo na carteira
+      tags:
+      - carteiras
+  /api/v1/carteiras/{id}/ativo/{codigo}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a carteira by ID
+      parameters:
+      - description: Carteira ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Ativo Codigo
+        in: path
+        name: codigo
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+      summary: Delete a carteira
+      tags:
+      - carteiras
   /api/v1/consolidacoes:
     get:
       consumes:
@@ -528,7 +782,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get All cotacao
       tags:
       - cotacoes
@@ -546,11 +800,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Criar a cotacao
       tags:
       - cotacoes
@@ -581,7 +835,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get a cotacao
       tags:
       - cotacoes
@@ -606,7 +860,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get a cotacao
       tags:
       - cotacoes
@@ -631,11 +885,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Delete a Cotacao
       tags:
       - cotacoes
@@ -656,7 +910,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get All Fundos Imobiliarios
       tags:
       - fundos-imobiliarios
@@ -681,11 +935,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Create a Fundo Imobiliario
       tags:
       - fundos-imobiliarios
@@ -710,11 +964,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Delete a Fundo Imobiliario
       tags:
       - fundos-imobiliarios
@@ -738,7 +992,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get a Fundo Imobiliario
       tags:
       - fundos-imobiliarios
@@ -768,15 +1022,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Update a Fundo Imobiliario
       tags:
       - fundos-imobiliarios
@@ -802,7 +1056,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
       summary: Get All movimentacao BR
       tags:
       - movimentacoes
@@ -827,11 +1081,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
       summary: Delete a movimentacao
       tags:
       - movimentacoes
@@ -855,7 +1109,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
       summary: Get a movimentacao BR
       tags:
       - movimentacoes
@@ -881,11 +1135,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
       summary: Create a movimentacao de entrada
       tags:
       - movimentacoes
@@ -911,11 +1165,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
       summary: Create a movimentacao de saida
       tags:
       - movimentacoes
