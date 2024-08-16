@@ -11,34 +11,53 @@ import (
 )
 
 type CarteiraService struct {
-	repo      *repository.CarteiraRepository
-	ativoRepo *repository.CarteiraAtivoRepository
+	repo            *repository.CarteiraRepository
+	ativoRepo       *repository.CarteiraAtivoRepository
+	consolidacaoRep *repository.ConsolidacaoRepository
+	cotacaoRep      *repository.CotacaoHistoricoRepository
 }
 
-func NewCarteiraService(repo *repository.CarteiraRepository, ativoRepo *repository.CarteiraAtivoRepository) *CarteiraService {
-	return &CarteiraService{repo: repo, ativoRepo: ativoRepo}
+func NewCarteiraService(
+	repo *repository.CarteiraRepository,
+	ativoRepo *repository.CarteiraAtivoRepository,
+	consolidacaoRepo *repository.ConsolidacaoRepository,
+	cotacaoRep *repository.CotacaoHistoricoRepository,
+) *CarteiraService {
+	return &CarteiraService{
+		repo:            repo,
+		ativoRepo:       ativoRepo,
+		consolidacaoRep: consolidacaoRepo,
+		cotacaoRep:      cotacaoRep,
+	}
 }
 
-func (s *CarteiraService) getAtivosByCarteiraID(carteiraID uint) []model.CarteiraAtivo {
+func (s *CarteiraService) getAtivosByCarteiraID(carteiraID uint) []response.CarteiraAtivoResponse {
 	ativos, err := s.ativoRepo.GetAtivosByCarteiraID(carteiraID)
 	if err != nil {
 		ativos = []model.CarteiraAtivo{}
 	}
-	return ativos
+	var ativosResponse []response.CarteiraAtivoResponse
+	for _, ativo := range ativos {
+		consolidacao, _ := s.consolidacaoRep.GetConsolidacaoByCodigo(ativo.Codigo)
+		cotacao, _ := s.cotacaoRep.GetCotacaoMoreRecentByCodigo(ativo.Codigo)
+		ativosResponse = append(ativosResponse, mapper.ToCarteiraAtivoResponse(ativo, consolidacao, cotacao))
+	}
+	return ativosResponse
 }
 
 func (s *CarteiraService) GetAllCarteiras() ([]response.CarteiraResponse, error) {
 	var carteirasResponse []response.CarteiraResponse
 
-	bdrs, err := s.repo.GetAllCarteiras()
+	carteiras, err := s.repo.GetAllCarteiras()
 
 	if err != nil {
 		return []response.CarteiraResponse{}, err
 	}
 
-	for _, value := range bdrs {
-		ativos := s.getAtivosByCarteiraID(value.ID)
-		carteirasResponse = append(carteirasResponse, mapper.ToCarteiraResponse(value, ativos))
+	for _, value := range carteiras {
+		carteiraResponse := mapper.ToCarteiraResponse(value)
+		carteiraResponse.Ativos = s.getAtivosByCarteiraID(value.ID)
+		carteirasResponse = append(carteirasResponse, carteiraResponse)
 	}
 
 	if carteirasResponse == nil {
@@ -53,8 +72,9 @@ func (s *CarteiraService) GetCarteiraByID(id uint) (response.CarteiraResponse, e
 	if err != nil {
 		return response.CarteiraResponse{}, err
 	}
-	ativos := s.getAtivosByCarteiraID(carteira.ID)
-	return mapper.ToCarteiraResponse(carteira, ativos), err
+	carteiraResponse := mapper.ToCarteiraResponse(carteira)
+	carteiraResponse.Ativos = s.getAtivosByCarteiraID(carteira.ID)
+	return carteiraResponse, err
 }
 
 func (s *CarteiraService) CreateCarteira(carteiraRequest request.CarteiraRequest) (response.CarteiraResponse, error) {
@@ -63,7 +83,7 @@ func (s *CarteiraService) CreateCarteira(carteiraRequest request.CarteiraRequest
 	if err != nil {
 		return response.CarteiraResponse{}, err
 	}
-	return mapper.ToCarteiraResponse(carteiraCreated, []model.CarteiraAtivo{}), err
+	return mapper.ToCarteiraResponse(carteiraCreated), err
 }
 
 func (s *CarteiraService) UpdateCarteira(id uint, carteiraRequest request.CarteiraRequest) (response.CarteiraResponse, error) {
@@ -79,8 +99,9 @@ func (s *CarteiraService) UpdateCarteira(id uint, carteiraRequest request.Cartei
 		return response.CarteiraResponse{}, err
 	}
 
-	ativos := s.getAtivosByCarteiraID(carteiraUpdated.ID)
-	return mapper.ToCarteiraResponse(carteiraUpdated, ativos), err
+	carteiraResponse := mapper.ToCarteiraResponse(carteiraUpdated)
+	carteiraResponse.Ativos = s.getAtivosByCarteiraID(carteiraUpdated.ID)
+	return carteiraResponse, err
 }
 
 func (s *CarteiraService) DeleteCarteira(id uint) error {
@@ -103,7 +124,7 @@ func (s *CarteiraService) AddAtivo(carteiraId uint, ativoRequest request.Carteir
 	if err != nil {
 		return response.CarteiraAtivoResponse{}, err
 	}
-	return mapper.ToCarteiraAtivoResponse(ativoCreated), err
+	return mapper.ToCarteiraAtivoSimpleResponse(ativoCreated), err
 
 }
 

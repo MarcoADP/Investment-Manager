@@ -10,8 +10,12 @@ func ToCarteiraAtivo(carteiraId uint, ativoRequest request.CarteiraAtivoRequest)
 	return model.NewCarteiraAtivo(carteiraId, ativoRequest.Codigo, ativoRequest.ProporcaoDesejada)
 }
 
-func ToCarteiraAtivoResponse(ativo model.CarteiraAtivo) response.CarteiraAtivoResponse {
-	return response.NewCarteiraAtivoResponse(ativo.ID, ativo.Codigo, ativo.ProporcaoDesejada)
+func ToCarteiraAtivoResponse(ativo model.CarteiraAtivo, consolidacao model.Consolidacao, cotacao model.CotacaoHistorico) response.CarteiraAtivoResponse {
+	return response.NewCarteiraAtivoResponse(ativo.ID, ativo.Codigo, ativo.ProporcaoDesejada, consolidacao, cotacao)
+}
+
+func ToCarteiraAtivoSimpleResponse(ativo model.CarteiraAtivo) response.CarteiraAtivoResponse {
+	return response.NewCarteiraAtivoResponse(ativo.ID, ativo.Codigo, ativo.ProporcaoDesejada, model.Consolidacao{}, *&model.CotacaoHistorico{})
 }
 
 func UpdateCarteiraAtivo(ativo model.CarteiraAtivo, ativoRequest request.CarteiraAtivoRequest) model.CarteiraAtivo {

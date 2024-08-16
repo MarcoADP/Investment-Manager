@@ -65,7 +65,9 @@ func createCarteiraHandler(
 ) CarteiraHandler {
 	repo := repository.NewCarteiraRepository(db)
 	ativoRepo := repository.NewCarteiraAtivoRepository(db)
-	service := service.NewCarteiraService(repo, ativoRepo)
+	consolidacaoRepo := repository.NewConsolidacaoRepository(db)
+	cotacaoRepo := repository.NewCotacaoHistoricoRepository(db)
+	service := service.NewCarteiraService(repo, ativoRepo, consolidacaoRepo, cotacaoRepo)
 	return *NewCarteiraHandler(service)
 }
 

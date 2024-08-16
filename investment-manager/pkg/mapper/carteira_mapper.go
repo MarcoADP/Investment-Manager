@@ -10,12 +10,8 @@ func ToCarteira(carteiraRequest request.CarteiraRequest) *model.Carteira {
 	return model.NewCarteira(carteiraRequest.Nome, carteiraRequest.Descricao, carteiraRequest.ProporcaoDesejada)
 }
 
-func ToCarteiraResponse(carteira model.Carteira, ativos []model.CarteiraAtivo) response.CarteiraResponse {
-	var ativosResponse []response.CarteiraAtivoResponse
-	for _, ativo := range ativos {
-		ativosResponse = append(ativosResponse, ToCarteiraAtivoResponse(ativo))
-	}
-	return response.NewCarteiraResponse(carteira.ID, carteira.Nome, carteira.Descricao, carteira.ProporcaoDesejada, ativosResponse)
+func ToCarteiraResponse(carteira model.Carteira) response.CarteiraResponse {
+	return response.NewCarteiraResponse(carteira.ID, carteira.Nome, carteira.Descricao, carteira.ProporcaoDesejada, []response.CarteiraAtivoResponse{})
 }
 
 func UpdateCarteira(carteira model.Carteira, carteiraRequest request.CarteiraRequest) model.Carteira {
