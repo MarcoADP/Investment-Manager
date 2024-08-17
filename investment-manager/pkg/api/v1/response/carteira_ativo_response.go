@@ -17,9 +17,17 @@ type CarteiraAtivoResponse struct {
 	TotalAutal        float64
 	Saldo             float64
 	Variacao          float64
+	Movimento         string
 }
 
-func NewCarteiraAtivoResponse(id uint, codigo string, proporcaoDesejada float64, consolidacao model.Consolidacao, cotacao model.CotacaoHistorico) CarteiraAtivoResponse {
+func NewCarteiraAtivoResponse(
+	id uint,
+	codigo string,
+	proporcaoDesejada float64,
+	movimento string,
+	consolidacao model.Consolidacao,
+	cotacao model.CotacaoHistorico,
+) CarteiraAtivoResponse {
 	quantidade := consolidacao.QuantidadeEntrada - consolidacao.QuantidadeSaida
 	totalAtual := quantidade * cotacao.Valor
 	saldo := totalAtual - consolidacao.ValorTotalEntrada
@@ -39,6 +47,7 @@ func NewCarteiraAtivoResponse(id uint, codigo string, proporcaoDesejada float64,
 		TotalAutal:        totalAtual,
 		Saldo:             roundNumbers(saldo, 2.0),
 		Variacao:          roundNumbers(variacao, 4.0),
+		Movimento:         movimento,
 	}
 }
 
