@@ -1,8 +1,10 @@
 package service
 
 import (
+	"log"
 	"time"
 
+	"github.com/MarcoADP/Investment-Manager/internal/brapi"
 	"github.com/MarcoADP/Investment-Manager/pkg/api/v1/request"
 	"github.com/MarcoADP/Investment-Manager/pkg/api/v1/response"
 	"github.com/MarcoADP/Investment-Manager/pkg/db/model"
@@ -88,4 +90,33 @@ func (s *CotacaoHistoricoService) CreateCotacao(cotacaoRequest request.CotacaoHi
 
 func (s *CotacaoHistoricoService) DeleteCotacao(id uint) error {
 	return s.repo.DeleteCotacaoHistorico(id)
+}
+
+func (s *CotacaoHistoricoService) GetCotacaoExterno(codigo string) (response.CotacaoHistoricoResponse, error) {
+
+	cotacaoResponse, err := brapi.GetCotacaoBrapi(codigo, "18ftFmyA1zQzEzhwQJmync")
+	if err != nil {
+		log.Fatalf("Failed to get quote: %v", err)
+		return response.CotacaoHistoricoResponse{}, err
+	}
+
+	cotacao, err := mapper.ToCotacaoHistoricoFromBrapi(*cotacaoResponse)
+	if err != nil {
+		log.Fatalf("Failed to get quote: %v", err)
+		return response.CotacaoHistoricoResponse{}, err
+	}
+
+	cotacaoExisted, err := s.repo.GetCotacoesByCodigoAndData(cotacao.Codigo, cotacao.Data)
+	var cotacaoPersisted model.CotacaoHistorico
+	if err == nil {
+		cotacao.ID = cotacaoExisted.ID
+		cotacaoPersisted, err = s.repo.UpdateCotacaoHistorico(*cotacao)
+	} else {
+		cotacaoPersisted, err = s.repo.CreateCotacao(*cotacao)
+	}
+
+	if err != nil {
+		return response.CotacaoHistoricoResponse{}, err
+	}
+	return mapper.ToCotacaoHistoricoResponse(cotacaoPersisted), err
 }

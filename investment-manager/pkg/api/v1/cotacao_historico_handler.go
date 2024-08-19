@@ -137,6 +137,31 @@ func (h *CotacaoHistoricoHandler) CreateCotacao(c *gin.Context) {
 	c.JSON(http.StatusCreated, createdCotacao)
 }
 
+// @Summary Criar a cotacao
+// @Description Criar a cotacao
+// @Tags cotacoes
+// @Accept  json
+// @Produce  json
+// @Success 201 {object} response.CotacaoHistoricoResponse
+// @Failure 400 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /api/v1/cotacoes/brapi [post]
+func (h *CotacaoHistoricoHandler) CreateCotacaoBrapi(c *gin.Context) {
+	var cotacaoRequest request.CotacaoBrapiRequest
+	if err := c.ShouldBindJSON(&cotacaoRequest); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	createdCotacao, err := h.cotacaoHistoricoService.GetCotacaoExterno(cotacaoRequest.Codigo)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusCreated, createdCotacao)
+}
+
 // @Summary Delete a Cotacao
 // @Description Delete a Cotacao by ID
 // @Tags cotacoes

@@ -117,6 +117,7 @@ func CreateRoutes(db *gorm.DB) *gin.Engine {
 		api.GET("/cotacoes/:codigo", cotacaoHistoricoHandler.GetCotacoesByCodigo)
 		api.GET("/cotacoes/:codigo/last", cotacaoHistoricoHandler.GetCotacaoMoreRecentByCodigo)
 		api.POST("/cotacoes", cotacaoHistoricoHandler.CreateCotacao)
+		api.POST("/cotacoes/brapi", cotacaoHistoricoHandler.CreateCotacaoBrapi)
 		api.DELETE("/cotacoes/:id", cotacaoHistoricoHandler.DeleteCotacao)
 
 		api.GET("/carteiras", carteiraHandler.GetCarteiras)
