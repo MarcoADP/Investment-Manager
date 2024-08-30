@@ -71,6 +71,16 @@ func createCarteiraHandler(
 	return *NewCarteiraHandler(service)
 }
 
+func createAtivoHandlerHandler(
+	db *gorm.DB,
+) AtivoInformacaoHandler {
+	repo := repository.NewAtivoInformacaoRepository(db)
+	cotacaoRepo := repository.NewCotacaoHistoricoRepository(db)
+	valuationRepo := repository.NewAtivoValuationRepository(db)
+	service := service.NewAtivoInformacaoService(repo, cotacaoRepo, valuationRepo)
+	return *NewAtivoInformacaoHandler(service)
+}
+
 func CreateRoutes(db *gorm.DB) *gin.Engine {
 
 	router := gin.Default()
@@ -82,6 +92,7 @@ func CreateRoutes(db *gorm.DB) *gin.Engine {
 	consolidacaoHandler := createConsolidacaoHandler(db)
 	cotacaoHistoricoHandler := createCotacaoHistoricoHandler(db)
 	carteiraHandler := createCarteiraHandler(db)
+	ativoInformacaoHandler := createAtivoHandlerHandler(db)
 
 	api := router.Group("/api/v1")
 	{
@@ -127,6 +138,11 @@ func CreateRoutes(db *gorm.DB) *gin.Engine {
 		api.DELETE("/carteiras/:id", carteiraHandler.DeleteCarteira)
 		api.POST("/carteiras/:id/ativo", carteiraHandler.AddAtivoCarteira)
 		api.DELETE("/carteiras/:id/ativo/:codigo", carteiraHandler.DeleteAtivo)
+
+		api.GET("/informacoes/:codigo", ativoInformacaoHandler.GetInformacoesByCodigo)
+		api.GET("/informacoes/:codigo/last", ativoInformacaoHandler.GetInformacaoMoreRecentByCodigo)
+		api.POST("/informacoes", ativoInformacaoHandler.CreateInformacao)
+		api.DELETE("/informacoes/:id", ativoInformacaoHandler.DeleteInformacao)
 	}
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
