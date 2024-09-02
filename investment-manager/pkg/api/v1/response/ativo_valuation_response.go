@@ -7,17 +7,17 @@ import (
 )
 
 type AtivoValuationResponse struct {
-	ID          uint      `gorm:"column:ativo_valuation;primaryKey;autoIncrement"`
-	DataCalculo time.Time `gorm:"column:data_calculo;type:date"`
-	Codigo      string    `gorm:"column:codigo"`
-	LPA         float64   `gorm:"column:lpa"`
-	PL          float64   `gorm:"column:p_l"`
-	VPA         float64   `gorm:"column:vpa"`
-	PVP         float64   `gorm:"column:p_vp"`
-	EvEbit      float64   `gorm:"column:ev_ebit"`
-	PEbit       float64   `gorm:"column:p_ebit"`
-	EvEbitda    float64   `gorm:"column:ev_ebitda"`
-	PEbitda     float64   `gorm:"column:p_ebit"`
+	ID          uint
+	DataCalculo time.Time
+	Codigo      string
+	LPA         float64
+	PL          float64
+	VPA         float64
+	PVP         float64
+	EvEbit      float64
+	PEbit       float64
+	EvEbitda    float64
+	PEbitda     float64
 }
 
 func NewAtivoValuationResponse(ativoValuation model.AtivoValuation,

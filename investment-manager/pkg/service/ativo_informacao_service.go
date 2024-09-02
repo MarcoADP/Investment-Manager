@@ -9,16 +9,23 @@ import (
 )
 
 type AtivoInformacaoService struct {
-	repo         *repository.AtivoInformacaoRepository
-	cotacaoRep   *repository.CotacaoHistoricoRepository
-	valuationRep *repository.AtivoValuationRepository
+	repo             *repository.AtivoInformacaoRepository
+	cotacaoRep       *repository.CotacaoHistoricoRepository
+	valuationRep     *repository.AtivoValuationRepository
+	endividamentoRep *repository.AtivoEndividamentoRepository
 }
 
 func NewAtivoInformacaoService(repo *repository.AtivoInformacaoRepository,
 	cotacaoRep *repository.CotacaoHistoricoRepository,
 	valuationRep *repository.AtivoValuationRepository,
+	endividamentoRep *repository.AtivoEndividamentoRepository,
 ) *AtivoInformacaoService {
-	return &AtivoInformacaoService{repo: repo, cotacaoRep: cotacaoRep, valuationRep: valuationRep}
+	return &AtivoInformacaoService{
+		repo:             repo,
+		cotacaoRep:       cotacaoRep,
+		valuationRep:     valuationRep,
+		endividamentoRep: endividamentoRep,
+	}
 }
 
 func (s *AtivoInformacaoService) GetInformacoesByCodigo(codigo string) ([]response.AtivoInformacaoResponse, error) {
@@ -65,6 +72,11 @@ func (s *AtivoInformacaoService) CreateInformacao(informacaoRequest request.Ativ
 		informacaoResponse.Valuation = valuation
 	}
 
+	endividamento, err := s.createEndividamento(informacaoPersisted)
+	if err == nil {
+		informacaoResponse.Endividamento = endividamento
+	}
+
 	return informacaoResponse, err
 }
 
@@ -80,4 +92,14 @@ func (s *AtivoInformacaoService) createValuation(informacao model.AtivoInformaca
 	}
 
 	return mapper.ToAtivoValuationResponse(valuationPersisted), err
+}
+
+func (s *AtivoInformacaoService) createEndividamento(informacao model.AtivoInformacao) (response.AtivoEndividamentoResponse, error) {
+	endividamento := mapper.ToAtivoEndividamento(informacao)
+	endividamentoPersisted, err := s.endividamentoRep.CreateEndividamento(endividamento)
+	if err != nil {
+		return response.AtivoEndividamentoResponse{}, err
+	}
+
+	return mapper.ToAtivoEndividamentoResponse(endividamentoPersisted), err
 }

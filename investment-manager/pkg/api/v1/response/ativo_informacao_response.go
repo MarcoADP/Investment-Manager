@@ -19,6 +19,7 @@ type AtivoInformacaoResponse struct {
 	Ebit              float64
 	Ebitda            float64
 	Valuation         AtivoValuationResponse
+	Endividamento     AtivoEndividamentoResponse
 }
 
 func NewAtivoInformacaoResponse(id uint, data time.Time, codigo string, numeroAcoes uint64, valorFirma float64,

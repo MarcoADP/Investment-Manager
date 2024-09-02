@@ -54,11 +54,3 @@ func ToAtivoInformacaoResponseArray(cotacoes []model.AtivoInformacao) []response
 	}
 	return cotacoesResponse
 }
-
-func ToAtivoValuation(ativoInformacao model.AtivoInformacao, preco float64) model.AtivoValuation {
-	return *model.NewAtivoValuation(ativoInformacao, preco)
-}
-
-func ToAtivoValuationResponse(ativoValuation model.AtivoValuation) response.AtivoValuationResponse {
-	return response.NewAtivoValuationResponse(ativoValuation)
-}
