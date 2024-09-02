@@ -41,7 +41,7 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -79,13 +79,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -123,7 +123,7 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -168,19 +168,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -216,13 +216,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -467,7 +467,7 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -505,13 +505,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -549,7 +549,7 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -594,19 +594,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -642,13 +642,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -695,19 +695,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -752,13 +752,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -790,7 +790,7 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -822,13 +822,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -866,7 +866,7 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -1127,7 +1127,7 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -1165,13 +1165,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -1209,7 +1209,7 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -1254,19 +1254,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -1302,13 +1302,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -1506,7 +1506,7 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -1546,13 +1546,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -1592,13 +1592,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -1636,7 +1636,7 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -1672,13 +1672,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -1817,6 +1817,32 @@ const docTemplate = `{
                 }
             }
         },
+        "github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.AtivoEficienciaResponse": {
+            "type": "object",
+            "properties": {
+                "codigo": {
+                    "type": "string"
+                },
+                "dataCalculo": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "margemBruta": {
+                    "type": "number"
+                },
+                "margemEbit": {
+                    "type": "number"
+                },
+                "margemEbitda": {
+                    "type": "number"
+                },
+                "margemLiquida": {
+                    "type": "number"
+                }
+            }
+        },
         "github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.AtivoEndividamentoResponse": {
             "type": "object",
             "properties": {
@@ -1826,13 +1852,13 @@ const docTemplate = `{
                 "dataCalculo": {
                     "type": "string"
                 },
-                "divida_Ebit": {
+                "dividaEbit": {
                     "type": "number"
                 },
-                "divida_Ebitda": {
+                "dividaEbitda": {
                     "type": "number"
                 },
-                "divida_Patrimonio_Liquido": {
+                "dividaPatrimonioLiquido": {
                     "type": "number"
                 },
                 "id": {
@@ -1860,6 +1886,9 @@ const docTemplate = `{
                 },
                 "ebitda": {
                     "type": "number"
+                },
+                "eficiencia": {
+                    "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.AtivoEficienciaResponse"
                 },
                 "endividamento": {
                     "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.AtivoEndividamentoResponse"
