@@ -84,6 +84,14 @@ func createAtivoHandlerHandler(
 	return *NewAtivoInformacaoHandler(service)
 }
 
+func createDividendoHandler(
+	db *gorm.DB,
+) DividendoHandler {
+	repo := repository.NewDividendoRepository(db)
+	service := service.NewDividendoService(repo)
+	return *NewDividendoHandler(service)
+}
+
 func CreateRoutes(db *gorm.DB) *gin.Engine {
 
 	router := gin.Default()
@@ -96,6 +104,7 @@ func CreateRoutes(db *gorm.DB) *gin.Engine {
 	cotacaoHistoricoHandler := createCotacaoHistoricoHandler(db)
 	carteiraHandler := createCarteiraHandler(db)
 	ativoInformacaoHandler := createAtivoHandlerHandler(db)
+	dividendoHandler := createDividendoHandler(db)
 
 	api := router.Group("/api/v1")
 	{
@@ -146,6 +155,11 @@ func CreateRoutes(db *gorm.DB) *gin.Engine {
 		api.GET("/informacoes/:codigo/last", ativoInformacaoHandler.GetInformacaoMoreRecentByCodigo)
 		api.POST("/informacoes", ativoInformacaoHandler.CreateInformacao)
 		api.DELETE("/informacoes/:id", ativoInformacaoHandler.DeleteInformacao)
+
+		api.GET("/dividendos", dividendoHandler.GetDividendos)
+		api.GET("/dividendos/:codigo", dividendoHandler.GetDividendosByCodigo)
+		api.POST("/dividendos", dividendoHandler.CreateDividendo)
+		api.DELETE("/dividendos/:id", dividendoHandler.DeleteDividendo)
 	}
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
