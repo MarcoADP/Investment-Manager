@@ -55,4 +55,7 @@
 {"body": {"codigo":"VGIR11","data": "24/07/2024", "quantidade":100,"tipoAtivo":"Fundo Imobiliário", "valorUnitario":9.96}},
 {"body": {"codigo":"XPSF11","data": "24/07/2024", "quantidade":110,"tipoAtivo":"Fundo Imobiliário", "valorUnitario":7.75}},
 {"body": {"codigo":"XPCA11","data": "05/08/2024", "quantidade":100,"tipoAtivo":"Fundo Imobiliário", "valorUnitario":8.08}},
-{"body": {"codigo":"MXRF11","data": "05/08/2024", "quantidade":100,"tipoAtivo":"Fundo Imobiliário", "valorUnitario":10.06}}]
+{"body": {"codigo":"MXRF11","data": "05/08/2024", "quantidade":100,"tipoAtivo":"Fundo Imobiliário", "valorUnitario":10.06}},
+{"body": {"codigo":"SNAG11","data": "23/08/2024", "quantidade":110,"tipoAtivo":"Fundo Imobiliário", "valorUnitario":10.21}},
+{"body": {"codigo":"KLBN11","data": "29/08/2024", "quantidade":4,"tipoAtivo":"Ação", "valorUnitario":21.68}},
+{"body": {"codigo":"KLBN11","data": "02/09/2024", "quantidade":5,"tipoAtivo":"Ação", "valorUnitario":21.58}}]

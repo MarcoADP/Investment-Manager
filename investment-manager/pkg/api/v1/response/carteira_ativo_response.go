@@ -14,7 +14,7 @@ type CarteiraAtivoResponse struct {
 	PrecoCompra       float64
 	TotalCompra       float64
 	PrecoAtual        float64
-	TotalAutal        float64
+	TotalAtual        float64
 	Saldo             float64
 	Variacao          float64
 	Movimento         string
@@ -44,7 +44,7 @@ func NewCarteiraAtivoResponse(
 		PrecoCompra:       consolidacao.ValorMedioEntrada,
 		TotalCompra:       consolidacao.ValorTotalEntrada,
 		PrecoAtual:        cotacao.Valor,
-		TotalAutal:        totalAtual,
+		TotalAtual:        totalAtual,
 		Saldo:             roundNumbers(saldo, 2.0),
 		Variacao:          roundNumbers(variacao, 4.0),
 		Movimento:         movimento,
