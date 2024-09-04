@@ -14,6 +14,7 @@ type AtivoInformacaoService struct {
 	valuationRep     *repository.AtivoValuationRepository
 	endividamentoRep *repository.AtivoEndividamentoRepository
 	eficienciaRep    *repository.AtivoEficienciaRepository
+	rentabilidadeRep *repository.AtivoRentabilidadeRepository
 }
 
 func NewAtivoInformacaoService(repo *repository.AtivoInformacaoRepository,
@@ -21,6 +22,7 @@ func NewAtivoInformacaoService(repo *repository.AtivoInformacaoRepository,
 	valuationRep *repository.AtivoValuationRepository,
 	endividamentoRep *repository.AtivoEndividamentoRepository,
 	eficienciaRep *repository.AtivoEficienciaRepository,
+	rentabilidadeRep *repository.AtivoRentabilidadeRepository,
 ) *AtivoInformacaoService {
 	return &AtivoInformacaoService{
 		repo:             repo,
@@ -28,6 +30,7 @@ func NewAtivoInformacaoService(repo *repository.AtivoInformacaoRepository,
 		valuationRep:     valuationRep,
 		endividamentoRep: endividamentoRep,
 		eficienciaRep:    eficienciaRep,
+		rentabilidadeRep: rentabilidadeRep,
 	}
 }
 
@@ -85,6 +88,11 @@ func (s *AtivoInformacaoService) CreateInformacao(informacaoRequest request.Ativ
 		informacaoResponse.Eficiencia = eficiencia
 	}
 
+	rentabilidade, err := s.createRentabilidade(informacaoPersisted)
+	if err == nil {
+		informacaoResponse.Rentabilidade = rentabilidade
+	}
+
 	return informacaoResponse, err
 }
 
@@ -120,4 +128,14 @@ func (s *AtivoInformacaoService) createEficiencia(informacao model.AtivoInformac
 	}
 
 	return mapper.ToAtivoEficienciaResponse(eficienciaPersisted), err
+}
+
+func (s *AtivoInformacaoService) createRentabilidade(informacao model.AtivoInformacao) (response.AtivoRentabilidadeResponse, error) {
+	rentabilidade := mapper.ToAtivoRentabilidade(informacao)
+	rentabilidadePersisted, err := s.rentabilidadeRep.CreateRentabilidade(rentabilidade)
+	if err != nil {
+		return response.AtivoRentabilidadeResponse{}, err
+	}
+
+	return mapper.ToAtivoRentabilidadeResponse(rentabilidadePersisted), err
 }

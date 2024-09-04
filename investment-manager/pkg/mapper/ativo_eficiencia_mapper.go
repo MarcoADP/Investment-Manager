@@ -9,6 +9,6 @@ func ToAtivoEficiencia(ativoInformacao model.AtivoInformacao) model.AtivoEficien
 	return *model.NewAtivoEficiencia(ativoInformacao)
 }
 
-func ToAtivoEficienciaResponse(ativoValuation model.AtivoEficiencia) response.AtivoEficienciaResponse {
-	return response.NewAtivoEficienciaResponse(ativoValuation)
+func ToAtivoEficienciaResponse(ativoEficiencia model.AtivoEficiencia) response.AtivoEficienciaResponse {
+	return response.NewAtivoEficienciaResponse(ativoEficiencia)
 }

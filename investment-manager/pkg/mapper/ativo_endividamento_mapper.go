@@ -9,6 +9,6 @@ func ToAtivoEndividamento(ativoInformacao model.AtivoInformacao) model.AtivoEndi
 	return *model.NewAtivoEndividamento(ativoInformacao)
 }
 
-func ToAtivoEndividamentoResponse(ativoValuation model.AtivoEndividamento) response.AtivoEndividamentoResponse {
-	return response.NewAtivoEndividamentoResponse(ativoValuation)
+func ToAtivoEndividamentoResponse(ativoEndividamento model.AtivoEndividamento) response.AtivoEndividamentoResponse {
+	return response.NewAtivoEndividamentoResponse(ativoEndividamento)
 }

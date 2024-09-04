@@ -21,6 +21,7 @@ type AtivoInformacaoResponse struct {
 	Valuation         AtivoValuationResponse
 	Endividamento     AtivoEndividamentoResponse
 	Eficiencia        AtivoEficienciaResponse
+	Rentabilidade     AtivoRentabilidadeResponse
 }
 
 func NewAtivoInformacaoResponse(id uint, data time.Time, codigo string, numeroAcoes uint64, valorFirma float64,
