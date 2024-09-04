@@ -162,6 +162,31 @@ func (h *CotacaoHistoricoHandler) CreateCotacaoBrapi(c *gin.Context) {
 	c.JSON(http.StatusCreated, createdCotacao)
 }
 
+// @Summary Criar cotações de ativos em uma carteira
+// @Description Criar cotações de ativos em uma carteira
+// @Tags cotacoes
+// @Accept  json
+// @Produce  json
+// @Param carteiraId path int true "Carteira ID"
+// @Success 201 {object} []response.CotacaoHistoricoResponse
+// @Failure 400 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /api/v1/cotacoes/carteira/{carteiraId} [post]
+func (h *CotacaoHistoricoHandler) CreateCotacoesCarteira(c *gin.Context) {
+	carteiraId, err := strconv.Atoi(c.Param("carteiraId"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+	createdCotacao, err := h.cotacaoHistoricoService.GetCotacoesCarteira(uint(carteiraId))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusCreated, createdCotacao)
+}
+
 // @Summary Delete a Cotacao
 // @Description Delete a Cotacao by ID
 // @Tags cotacoes

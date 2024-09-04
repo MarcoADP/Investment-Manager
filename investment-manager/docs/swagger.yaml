@@ -526,7 +526,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get All BDR
       tags:
       - bdrs
@@ -551,11 +551,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Create a bdr
       tags:
       - bdrs
@@ -580,11 +580,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Delete a bdr
       tags:
       - bdrs
@@ -608,7 +608,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get a BDR
       tags:
       - bdrs
@@ -638,15 +638,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Update a bdr
       tags:
       - bdrs
@@ -952,7 +952,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get All cotacao
       tags:
       - cotacoes
@@ -970,11 +970,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Criar a cotacao
       tags:
       - cotacoes
@@ -1005,7 +1005,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get a cotacao
       tags:
       - cotacoes
@@ -1030,7 +1030,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get a cotacao
       tags:
       - cotacoes
@@ -1055,11 +1055,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Delete a Cotacao
       tags:
       - cotacoes
@@ -1078,12 +1078,43 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Criar a cotacao
+      tags:
+      - cotacoes
+  /api/v1/cotacoes/carteira/{carteiraId}:
+    post:
+      consumes:
+      - application/json
+      description: Criar cotações de ativos em uma carteira
+      parameters:
+      - description: Carteira ID
+        in: path
+        name: carteiraId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            items:
+              $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.CotacaoHistoricoResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+      summary: Criar cotações de ativos em uma carteira
       tags:
       - cotacoes
   /api/v1/dividendos:
@@ -1459,7 +1490,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
       summary: Get All movimentacao BR
       tags:
       - movimentacoes
@@ -1484,11 +1515,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
       summary: Delete a movimentacao
       tags:
       - movimentacoes
@@ -1512,7 +1543,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
       summary: Get a movimentacao BR
       tags:
       - movimentacoes
@@ -1538,11 +1569,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
       summary: Create a movimentacao de entrada
       tags:
       - movimentacoes
@@ -1568,11 +1599,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
       summary: Create a movimentacao de saida
       tags:
       - movimentacoes

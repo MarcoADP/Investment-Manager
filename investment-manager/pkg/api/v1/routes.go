@@ -56,7 +56,8 @@ func createCotacaoHistoricoHandler(
 	db *gorm.DB,
 ) CotacaoHistoricoHandler {
 	repo := repository.NewCotacaoHistoricoRepository(db)
-	service := service.NewCotacaoHistoricoService(repo)
+	carteiraAtivoRep := repository.NewCarteiraAtivoRepository(db)
+	service := service.NewCotacaoHistoricoService(repo, carteiraAtivoRep)
 	return *NewCotacaoHistoricoHandler(service)
 }
 
@@ -145,6 +146,7 @@ func CreateRoutes(db *gorm.DB) *gin.Engine {
 		api.GET("/cotacoes/:codigo/last", cotacaoHistoricoHandler.GetCotacaoMoreRecentByCodigo)
 		api.POST("/cotacoes", cotacaoHistoricoHandler.CreateCotacao)
 		api.POST("/cotacoes/brapi", cotacaoHistoricoHandler.CreateCotacaoBrapi)
+		api.POST("/cotacoes/carteira/:carteiraId", cotacaoHistoricoHandler.CreateCotacoesCarteira)
 		api.DELETE("/cotacoes/:id", cotacaoHistoricoHandler.DeleteCotacao)
 
 		api.GET("/carteiras", carteiraHandler.GetCarteiras)

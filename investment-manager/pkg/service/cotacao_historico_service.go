@@ -13,11 +13,12 @@ import (
 )
 
 type CotacaoHistoricoService struct {
-	repo *repository.CotacaoHistoricoRepository
+	repo             *repository.CotacaoHistoricoRepository
+	carteiraAtivoRep *repository.CarteiraAtivoRepository
 }
 
-func NewCotacaoHistoricoService(repo *repository.CotacaoHistoricoRepository) *CotacaoHistoricoService {
-	return &CotacaoHistoricoService{repo: repo}
+func NewCotacaoHistoricoService(repo *repository.CotacaoHistoricoRepository, carteiraAtivoRep *repository.CarteiraAtivoRepository) *CotacaoHistoricoService {
+	return &CotacaoHistoricoService{repo: repo, carteiraAtivoRep: carteiraAtivoRep}
 }
 
 func (s *CotacaoHistoricoService) GetAllCotacoes() ([]response.CotacaoHistoricoResponse, error) {
@@ -119,4 +120,23 @@ func (s *CotacaoHistoricoService) GetCotacaoExterno(codigo string) (response.Cot
 		return response.CotacaoHistoricoResponse{}, err
 	}
 	return mapper.ToCotacaoHistoricoResponse(cotacaoPersisted), err
+}
+
+func (s *CotacaoHistoricoService) GetCotacoesCarteira(carteiraId uint) ([]response.CotacaoHistoricoResponse, error) {
+
+	var cotacoes []response.CotacaoHistoricoResponse
+	carteiraAtivos, err := s.carteiraAtivoRep.GetAtivosByCarteiraID(carteiraId)
+
+	if err != nil {
+		return []response.CotacaoHistoricoResponse{}, err
+	}
+
+	for _, value := range carteiraAtivos {
+		cotacaoResponse, err := s.GetCotacaoExterno(value.Codigo)
+		if err == nil {
+			cotacoes = append(cotacoes, cotacaoResponse)
+		}
+	}
+
+	return cotacoes, err
 }
