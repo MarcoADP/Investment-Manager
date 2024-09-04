@@ -3,6 +3,8 @@ package repository
 import (
 	"github.com/MarcoADP/Investment-Manager/pkg/db/model"
 	"gorm.io/gorm"
+
+	"time"
 )
 
 type DividendoRepository struct {
@@ -53,6 +55,14 @@ func (r *DividendoRepository) DeleteDividendo(id uint) error {
 func (r *DividendoRepository) GetDividendosByCodigo(codigo string) ([]model.Dividendo, error) {
 	var dividendos []model.Dividendo
 	if err := r.db.Where("codigo = ?", codigo).Order("data_pagamento DESC").Find(&dividendos).Error; err != nil {
+		return []model.Dividendo{}, err
+	}
+	return dividendos, nil
+}
+
+func (r *DividendoRepository) GetDividendosByCodigoAndIntervalo(codigo string, dataInicio time.Time, dataFim time.Time) ([]model.Dividendo, error) {
+	var dividendos []model.Dividendo
+	if err := r.db.Where("codigo = ? and data_pagamento >= ? and data_pagamento <= ?", codigo, dataInicio, dataFim).Order("data_pagamento DESC").Find(&dividendos).Error; err != nil {
 		return []model.Dividendo{}, err
 	}
 	return dividendos, nil

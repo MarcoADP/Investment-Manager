@@ -1,6 +1,8 @@
 package service
 
 import (
+	"log"
+
 	"github.com/MarcoADP/Investment-Manager/pkg/api/v1/request"
 	"github.com/MarcoADP/Investment-Manager/pkg/api/v1/response"
 	"github.com/MarcoADP/Investment-Manager/pkg/db/model"
@@ -9,12 +11,15 @@ import (
 )
 
 type AtivoInformacaoService struct {
-	repo             *repository.AtivoInformacaoRepository
-	cotacaoRep       *repository.CotacaoHistoricoRepository
-	valuationRep     *repository.AtivoValuationRepository
-	endividamentoRep *repository.AtivoEndividamentoRepository
-	eficienciaRep    *repository.AtivoEficienciaRepository
-	rentabilidadeRep *repository.AtivoRentabilidadeRepository
+	repo              *repository.AtivoInformacaoRepository
+	cotacaoRep        *repository.CotacaoHistoricoRepository
+	valuationRep      *repository.AtivoValuationRepository
+	endividamentoRep  *repository.AtivoEndividamentoRepository
+	eficienciaRep     *repository.AtivoEficienciaRepository
+	rentabilidadeRep  *repository.AtivoRentabilidadeRepository
+	ativoDividendoRep *repository.AtivoDividendoRepository
+	dividendosRep     *repository.DividendoRepository
+	consolidacaoRep   *repository.ConsolidacaoRepository
 }
 
 func NewAtivoInformacaoService(repo *repository.AtivoInformacaoRepository,
@@ -23,14 +28,20 @@ func NewAtivoInformacaoService(repo *repository.AtivoInformacaoRepository,
 	endividamentoRep *repository.AtivoEndividamentoRepository,
 	eficienciaRep *repository.AtivoEficienciaRepository,
 	rentabilidadeRep *repository.AtivoRentabilidadeRepository,
+	ativoDividendoRep *repository.AtivoDividendoRepository,
+	dividendosRep *repository.DividendoRepository,
+	consolidacaoRep *repository.ConsolidacaoRepository,
 ) *AtivoInformacaoService {
 	return &AtivoInformacaoService{
-		repo:             repo,
-		cotacaoRep:       cotacaoRep,
-		valuationRep:     valuationRep,
-		endividamentoRep: endividamentoRep,
-		eficienciaRep:    eficienciaRep,
-		rentabilidadeRep: rentabilidadeRep,
+		repo:              repo,
+		cotacaoRep:        cotacaoRep,
+		valuationRep:      valuationRep,
+		endividamentoRep:  endividamentoRep,
+		eficienciaRep:     eficienciaRep,
+		rentabilidadeRep:  rentabilidadeRep,
+		ativoDividendoRep: ativoDividendoRep,
+		dividendosRep:     dividendosRep,
+		consolidacaoRep:   consolidacaoRep,
 	}
 }
 
@@ -93,6 +104,11 @@ func (s *AtivoInformacaoService) CreateInformacao(informacaoRequest request.Ativ
 		informacaoResponse.Rentabilidade = rentabilidade
 	}
 
+	dividendo, err := s.createDividendo(informacaoPersisted, cotacao.Valor)
+	if err == nil {
+		informacaoResponse.Dividendo = dividendo
+	}
+
 	return informacaoResponse, err
 }
 
@@ -138,4 +154,34 @@ func (s *AtivoInformacaoService) createRentabilidade(informacao model.AtivoInfor
 	}
 
 	return mapper.ToAtivoRentabilidadeResponse(rentabilidadePersisted), err
+}
+
+func (s *AtivoInformacaoService) createDividendo(informacao model.AtivoInformacao, precoAtual float64) (response.AtivoDividendoResponse, error) {
+
+	dataInicial := informacao.DataInformacao.AddDate(-1, 0, 0)
+	log.Println("Data Inicial: ", dataInicial)
+	dividendos, err := s.dividendosRep.GetDividendosByCodigoAndIntervalo(informacao.Codigo, dataInicial, informacao.DataInformacao)
+	somaDividendos := 0.0
+	if err == nil {
+		for _, value := range dividendos {
+			somaDividendos = somaDividendos + value.Valor
+		}
+	}
+	log.Println("Dividendos: ", somaDividendos)
+
+	consolidacao, err := s.consolidacaoRep.GetConsolidacaoByCodigo(informacao.Codigo)
+	precoCompra := 0.0
+	if err == nil {
+		precoCompra = consolidacao.ValorMedioEntrada
+	}
+	log.Println("Compra: ", precoCompra)
+	log.Println("Atual: ", precoAtual)
+
+	dividendo := mapper.ToAtivoDividendo(informacao, somaDividendos, precoAtual, precoCompra)
+	dividendoPersisted, err := s.ativoDividendoRep.CreateDividendo(dividendo)
+	if err != nil {
+		return response.AtivoDividendoResponse{}, err
+	}
+
+	return mapper.ToAtivoDividendoResponse(dividendoPersisted), err
 }

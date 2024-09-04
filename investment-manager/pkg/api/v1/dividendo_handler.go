@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/MarcoADP/Investment-Manager/pkg/api/v1/request"
+	"github.com/MarcoADP/Investment-Manager/pkg/api/v1/response"
 	"github.com/MarcoADP/Investment-Manager/pkg/service"
 	"github.com/gin-gonic/gin"
 )
@@ -84,12 +85,14 @@ func (h *DividendoHandler) GetDividendosByCodigo(c *gin.Context) {
 // @Router /api/v1/dividendos [post]
 func (h *DividendoHandler) CreateDividendo(c *gin.Context) {
 	var dividendo request.DividendoRequest
-	if err := c.ShouldBindJSON(&dividendo); err != nil {
+	var err error
+	if err = c.ShouldBindJSON(&dividendo); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	createdDividendo, err := h.dividendoService.CreateDividendo(dividendo)
+	var createdDividendo response.DividendoResponse
+	createdDividendo, err = h.dividendoService.CreateDividendo(dividendo)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
