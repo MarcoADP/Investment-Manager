@@ -23,6 +23,14 @@ func (GrahamFormula) TableName() string {
 }
 
 func NewGrahamFormula(data time.Time, codigo string, precoAtual float64, lpa float64, vpa float64, pl float64, pvp float64) *GrahamFormula {
+	if pl == 0.0 {
+		pl = 15
+	}
+
+	if pvp == 0.0 {
+		pvp = 1.5
+	}
+
 	precoJusto := math.Sqrt(lpa * vpa * pl * pvp)
 	margem := ((precoJusto / precoAtual) - 1) * 100
 	return &GrahamFormula{
