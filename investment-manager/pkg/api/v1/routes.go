@@ -97,6 +97,14 @@ func createDividendoHandler(
 	return *NewDividendoHandler(service)
 }
 
+func createGrahamFormulaHandler(
+	db *gorm.DB,
+) GrahamFormulaHandler {
+	repo := repository.NewGrahamFormulaRepository(db)
+	service := service.NewGrahamFormulaService(repo)
+	return *NewGrahamFormulaHandler(service)
+}
+
 func CreateRoutes(db *gorm.DB) *gin.Engine {
 
 	router := gin.Default()
@@ -110,6 +118,7 @@ func CreateRoutes(db *gorm.DB) *gin.Engine {
 	carteiraHandler := createCarteiraHandler(db)
 	ativoInformacaoHandler := createAtivoHandlerHandler(db)
 	dividendoHandler := createDividendoHandler(db)
+	grahamFormulaHandler := createGrahamFormulaHandler(db)
 
 	api := router.Group("/api/v1")
 	{
@@ -166,6 +175,11 @@ func CreateRoutes(db *gorm.DB) *gin.Engine {
 		api.GET("/dividendos/:codigo", dividendoHandler.GetDividendosByCodigo)
 		api.POST("/dividendos", dividendoHandler.CreateDividendo)
 		api.DELETE("/dividendos/:id", dividendoHandler.DeleteDividendo)
+
+		api.GET("/graham-formula/:codigo", grahamFormulaHandler.GetGrahamFormulaByCodigo)
+		api.GET("/graham-formula/:codigo/last", grahamFormulaHandler.GetGrahamFormulaMoreRecentByCodigo)
+		api.POST("/graham-formula", grahamFormulaHandler.CreateGrahamFormula)
+		api.DELETE("/graham-formula/:id", grahamFormulaHandler.DeleteGrahamFormula)
 	}
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
