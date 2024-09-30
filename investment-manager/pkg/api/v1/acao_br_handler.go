@@ -2,7 +2,6 @@ package v1
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/MarcoADP/Investment-Manager/pkg/api/v1/request"
 	"github.com/MarcoADP/Investment-Manager/pkg/api/v1/response"
@@ -56,24 +55,20 @@ func (h *AcaoBrHandler) GetAcoesBr(c *gin.Context) {
 }
 
 // @Summary Get a Acão BR
-// @Description Get a Ação BR by ID
+// @Description Get a Ação BR by Codigo
 // @Tags acoes
 // @Accept  json
 // @Produce  json
-// @Param id path int true "AcaoBr ID"
+// @Param codigo path int true "AcaoBr Codigo"
 // @Success 200 {object} response.AcaoBrResponse
 // @Failure 404 {object} ErrorResponse
-// @Router /api/v1/acoes/{id} [get]
-func (h *AcaoBrHandler) GetAcaoBr(c *gin.Context) {
+// @Router /api/v1/acoes/{codigo} [get]
+func (h *AcaoBrHandler) GetAcaoBrByCodigo(c *gin.Context) {
 	var err error
-	id, err := strconv.Atoi(c.Param("id"))
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
-		return
-	}
+	codigo := c.Param("codigo")
 
 	var acao response.AcaoBrResponse
-	acao, err = h.acaoBrService.GetAcaoBrByID(uint(id))
+	acao, err = h.acaoBrService.GetAcaoBrByCodigo(codigo)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
@@ -112,27 +107,21 @@ func (h *AcaoBrHandler) CreateAcaoBr(c *gin.Context) {
 // @Tags acoes
 // @Accept  json
 // @Produce  json
-// @Param id path int true "AcaoBr ID"
+// @Param codigo path int true "AcaoBr codigo"
 // @Param acao body request.AcaoBrRequest true "AcaoBrRequest info"
 // @Success 200 {object} response.AcaoBrResponse
 // @Failure 400 {object} ErrorResponse
 // @Failure 404 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
-// @Router /api/v1/acoes/{id} [put]
+// @Router /api/v1/acoes/{codigo} [put]
 func (h *AcaoBrHandler) UpdateAcaoBr(c *gin.Context) {
-	id, err := strconv.Atoi(c.Param("id"))
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
-		return
-	}
-
 	var acao request.AcaoBrRequest
 	if err := c.ShouldBindJSON(&acao); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	updatedAcaoBr, err := h.acaoBrService.UpdateAcaoBr(uint(id), acao)
+	updatedAcaoBr, err := h.acaoBrService.UpdateAcaoBr(c.Param("codigo"), acao)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -142,23 +131,17 @@ func (h *AcaoBrHandler) UpdateAcaoBr(c *gin.Context) {
 }
 
 // @Summary Delete a acao
-// @Description Delete a acao by ID
+// @Description Delete a acao by codigo
 // @Tags acoes
 // @Accept  json
 // @Produce  json
-// @Param id path int true "AcaoBr ID"
+// @Param codigo path int true "AcaoBr codigo"
 // @Success 204 {string} string "No Content"
 // @Failure 400 {object} ErrorResponse
 // @Failure 404 {object} ErrorResponse
-// @Router /api/v1/acoes/{id} [delete]
+// @Router /api/v1/acoes/{codigo} [delete]
 func (h *AcaoBrHandler) DeleteAcaoBr(c *gin.Context) {
-	id, err := strconv.Atoi(c.Param("id"))
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
-		return
-	}
-
-	err = h.acaoBrService.DeleteAcaoBr(uint(id))
+	err := h.acaoBrService.DeleteAcaoBr(c.Param("codigo"))
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return

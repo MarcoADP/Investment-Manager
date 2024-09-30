@@ -29,6 +29,14 @@ func (r *AcaoBrRepository) GetAcaoBrByID(id uint) (model.AcaoBr, error) {
 	return acao, nil
 }
 
+func (r *AcaoBrRepository) GetAcaoBrByCodigo(codigo string) (model.AcaoBr, error) {
+	var acao model.AcaoBr
+	if err := r.db.Where("codigo = ?", codigo).First(&acao).Error; err != nil {
+		return model.AcaoBr{}, err
+	}
+	return acao, nil
+}
+
 func (r *AcaoBrRepository) CreateAcaoBr(acao model.AcaoBr) (model.AcaoBr, error) {
 	if err := r.db.Create(&acao).Error; err != nil {
 		return model.AcaoBr{}, err
@@ -43,8 +51,8 @@ func (r *AcaoBrRepository) UpdateAcaoBr(acao model.AcaoBr) (model.AcaoBr, error)
 	return acao, nil
 }
 
-func (r *AcaoBrRepository) DeleteAcaoBr(id uint) error {
-	if err := r.db.Delete(&model.AcaoBr{}, id).Error; err != nil {
+func (r *AcaoBrRepository) DeleteAcaoBr(codigo string) error {
+	if err := r.db.Where("codigo = ?", codigo).Delete(&model.AcaoBr{}).Error; err != nil {
 		return err
 	}
 	return nil

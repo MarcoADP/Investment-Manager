@@ -123,10 +123,10 @@ func CreateRoutes(db *gorm.DB) *gin.Engine {
 	api := router.Group("/api/v1")
 	{
 		api.GET("/acoes", acaoBrHandler.GetAcoesBr)
-		api.GET("/acoes/:id", acaoBrHandler.GetAcaoBr)
+		api.GET("/acoes/:codigo", acaoBrHandler.GetAcaoBrByCodigo)
 		api.POST("/acoes", acaoBrHandler.CreateAcaoBr)
-		api.PUT("/acoes/:id", acaoBrHandler.UpdateAcaoBr)
-		api.DELETE("/acoes/:id", acaoBrHandler.DeleteAcaoBr)
+		api.PUT("/acoes/:codigo", acaoBrHandler.UpdateAcaoBr)
+		api.DELETE("/acoes/:codigo", acaoBrHandler.DeleteAcaoBr)
 
 		api.GET("/fundos-imobiliarios", fundoImobiliarioBrHandler.GetFundosImobiliarios)
 		api.GET("/fundos-imobiliarios/:id", fundoImobiliarioBrHandler.GetFundoImobiliario)

@@ -1,6 +1,8 @@
 package service
 
 import (
+	"log"
+
 	"github.com/MarcoADP/Investment-Manager/pkg/api/v1/request"
 	"github.com/MarcoADP/Investment-Manager/pkg/api/v1/response"
 	"github.com/MarcoADP/Investment-Manager/pkg/db/repository"
@@ -35,8 +37,10 @@ func (s *AcaoBrService) GetAllAcaoBrs() ([]response.AcaoBrResponse, error) {
 	return acoesResponse, err
 }
 
-func (s *AcaoBrService) GetAcaoBrByID(id uint) (response.AcaoBrResponse, error) {
-	acao, err := s.repo.GetAcaoBrByID(id)
+func (s *AcaoBrService) GetAcaoBrByCodigo(codigo string) (response.AcaoBrResponse, error) {
+	log.Println("SERVICE")
+	log.Println(codigo)
+	acao, err := s.repo.GetAcaoBrByCodigo(codigo)
 	if err != nil {
 		return response.AcaoBrResponse{}, err
 	}
@@ -52,9 +56,9 @@ func (s *AcaoBrService) CreateAcaoBr(acaoRequest request.AcaoBrRequest) (respons
 	return mapper.ToAcaoBrResponse(acaoCreated), err
 }
 
-func (s *AcaoBrService) UpdateAcaoBr(id uint, acaoRequest request.AcaoBrRequest) (response.AcaoBrResponse, error) {
+func (s *AcaoBrService) UpdateAcaoBr(codigo string, acaoRequest request.AcaoBrRequest) (response.AcaoBrResponse, error) {
 
-	acao, err := s.repo.GetAcaoBrByID(id)
+	acao, err := s.repo.GetAcaoBrByCodigo(codigo)
 	if err != nil {
 		return response.AcaoBrResponse{}, err
 	}
@@ -68,6 +72,6 @@ func (s *AcaoBrService) UpdateAcaoBr(id uint, acaoRequest request.AcaoBrRequest)
 	return mapper.ToAcaoBrResponse(acaoUpdated), err
 }
 
-func (s *AcaoBrService) DeleteAcaoBr(id uint) error {
-	return s.repo.DeleteAcaoBr(id)
+func (s *AcaoBrService) DeleteAcaoBr(codigo string) error {
+	return s.repo.DeleteAcaoBr(codigo)
 }
