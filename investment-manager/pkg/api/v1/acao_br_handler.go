@@ -2,6 +2,7 @@ package v1
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/MarcoADP/Investment-Manager/pkg/api/v1/request"
 	"github.com/MarcoADP/Investment-Manager/pkg/api/v1/response"
@@ -74,6 +75,32 @@ func (h *AcaoBrHandler) GetAcaoBrByCodigo(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, acao)
+}
+
+// @Summary Get Lista de Ações de um setor
+// @Description Get Lista de Ações de um setor
+// @Tags acoes
+// @Accept  json
+// @Produce  json
+// @Param setor path int true "AcaoBr Setor"
+// @Success 200 {object} []response.AcaoBrResponse
+// @Failure 404 {object} ErrorResponse
+// @Router /api/v1/acoes/setor/{setor} [get]
+func (h *AcaoBrHandler) GetAcoesBySetor(c *gin.Context) {
+	var err error
+	setor, err := strconv.Atoi(c.Param("setor"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+
+	var acoes []response.AcaoBrResponse
+	acoes, err = h.acaoBrService.GetAcoesBySetor(uint(setor))
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, acoes)
 }
 
 // @Summary Create a acao

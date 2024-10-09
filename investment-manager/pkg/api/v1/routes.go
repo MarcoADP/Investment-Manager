@@ -14,7 +14,8 @@ func createAcaoBrHandler(
 	db *gorm.DB,
 ) AcaoBrHandler {
 	repo := repository.NewAcaoBrRepository(db)
-	service := service.NewAcaoBrService(repo)
+	setorRepo := repository.NewSetorRepository(db)
+	service := service.NewAcaoBrService(repo, setorRepo)
 	return *NewAcaoBrHandler(service)
 }
 
@@ -124,6 +125,7 @@ func CreateRoutes(db *gorm.DB) *gin.Engine {
 	{
 		api.GET("/acoes", acaoBrHandler.GetAcoesBr)
 		api.GET("/acoes/:codigo", acaoBrHandler.GetAcaoBrByCodigo)
+		api.GET("/acoes/setor/:setor", acaoBrHandler.GetAcoesBySetor)
 		api.POST("/acoes", acaoBrHandler.CreateAcaoBr)
 		api.PUT("/acoes/:codigo", acaoBrHandler.UpdateAcaoBr)
 		api.DELETE("/acoes/:codigo", acaoBrHandler.DeleteAcaoBr)

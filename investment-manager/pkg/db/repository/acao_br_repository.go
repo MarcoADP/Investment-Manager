@@ -37,6 +37,14 @@ func (r *AcaoBrRepository) GetAcaoBrByCodigo(codigo string) (model.AcaoBr, error
 	return acao, nil
 }
 
+func (r *AcaoBrRepository) GetAcoesBySetor(setorId uint) ([]model.AcaoBr, error) {
+	var acoes []model.AcaoBr
+	if err := r.db.Where("setor_id = ?", setorId).Find(&acoes).Error; err != nil {
+		return []model.AcaoBr{}, err
+	}
+	return acoes, nil
+}
+
 func (r *AcaoBrRepository) CreateAcaoBr(acao model.AcaoBr) (model.AcaoBr, error) {
 	if err := r.db.Create(&acao).Error; err != nil {
 		return model.AcaoBr{}, err
