@@ -21,6 +21,14 @@ func (r *AtivoEndividamentoRepository) GetEndividamentosByCodigo(codigo string) 
 	return endividamentos, nil
 }
 
+func (r *AtivoEndividamentoRepository) GetEndividamentoByAtivoInformacao(ativoInformacaoId uint) (model.AtivoEndividamento, error) {
+	var endividamento model.AtivoEndividamento
+	if err := r.db.Where("ativo_informacao_id = ?", ativoInformacaoId).First(&endividamento).Error; err != nil {
+		return model.AtivoEndividamento{}, err
+	}
+	return endividamento, nil
+}
+
 func (r *AtivoEndividamentoRepository) GetEndividamentoMoreRecentByCodigo(codigo string) (model.AtivoEndividamento, error) {
 	var endividamento model.AtivoEndividamento
 	if err := r.db.Where("codigo = ?", codigo).Order("data_calculo DESC").First(&endividamento).Error; err != nil {

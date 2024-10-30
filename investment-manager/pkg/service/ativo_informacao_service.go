@@ -105,5 +105,6 @@ func (s *AtivoInformacaoService) DeleteInformacao(id uint) error {
 
 func (s *AtivoInformacaoService) GetIndicadores(ativoInformacaoResponse response.AtivoInformacaoResponse) response.AtivoInformacaoResponse {
 	ativoInformacaoResponse.Valuation, _ = s.ativoValuationService.GetAtivoValuationByInformacaoID(ativoInformacaoResponse.ID)
+	ativoInformacaoResponse.Endividamento, _ = s.ativoEndividamentoService.GetAtivoEndividamentoByInformacaoID(ativoInformacaoResponse.ID)
 	return ativoInformacaoResponse
 }

@@ -24,3 +24,12 @@ func (s *AtivoEndividamentoService) CreateAtivoEndividamento(informacao model.At
 
 	return mapper.ToAtivoEndividamentoResponse(endividamentoPersisted), err
 }
+
+func (s *AtivoEndividamentoService) GetAtivoEndividamentoByInformacaoID(ativoInformacaoId uint) (response.AtivoEndividamentoResponse, error) {
+	endividamento, err := s.repo.GetEndividamentoByAtivoInformacao(ativoInformacaoId)
+	if err != nil {
+		return response.AtivoEndividamentoResponse{}, err
+	}
+
+	return mapper.ToAtivoEndividamentoResponse(endividamento), err
+}
