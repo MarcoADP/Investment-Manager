@@ -85,8 +85,8 @@ func createAtivoHandlerHandler(
 	ativoDividendoRep := repository.NewAtivoDividendoRepository(db)
 	dividendosRep := repository.NewDividendoRepository(db)
 	consolidadeRep := repository.NewConsolidacaoRepository(db)
-	service := service.NewAtivoInformacaoService(repo, cotacaoRepo, valuationRepo, endividamentoRepo, eficienciaRepo, rentabilidadeRepo,
-		ativoDividendoRep, dividendosRep, consolidadeRep)
+	ativoDividendoService := service.NewAtivoDividendoService(ativoDividendoRep, dividendosRep, consolidadeRep)
+	service := service.NewAtivoInformacaoService(repo, cotacaoRepo, valuationRepo, endividamentoRepo, eficienciaRepo, rentabilidadeRepo, ativoDividendoService)
 	return *NewAtivoInformacaoHandler(service)
 }
 
