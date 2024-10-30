@@ -13,7 +13,7 @@ type AtivoInformacaoService struct {
 	cotacaoRep                *repository.CotacaoHistoricoRepository
 	valuationRep              *repository.AtivoValuationRepository
 	endividamentoRep          *repository.AtivoEndividamentoRepository
-	eficienciaRep             *repository.AtivoEficienciaRepository
+	ativoEficienciaService    *AtivoEficienciaService
 	ativoRentabilidadeService *AtivoRentabilidadeService
 	ativoDividendoService     *AtivoDividendoService
 }
@@ -22,7 +22,7 @@ func NewAtivoInformacaoService(repo *repository.AtivoInformacaoRepository,
 	cotacaoRep *repository.CotacaoHistoricoRepository,
 	valuationRep *repository.AtivoValuationRepository,
 	endividamentoRep *repository.AtivoEndividamentoRepository,
-	eficienciaRep *repository.AtivoEficienciaRepository,
+	ativoEficienciaService *AtivoEficienciaService,
 	ativoRentabilidadeService *AtivoRentabilidadeService,
 	ativoDividendoService *AtivoDividendoService,
 ) *AtivoInformacaoService {
@@ -31,7 +31,7 @@ func NewAtivoInformacaoService(repo *repository.AtivoInformacaoRepository,
 		cotacaoRep:                cotacaoRep,
 		valuationRep:              valuationRep,
 		endividamentoRep:          endividamentoRep,
-		eficienciaRep:             eficienciaRep,
+		ativoEficienciaService:    ativoEficienciaService,
 		ativoRentabilidadeService: ativoRentabilidadeService,
 		ativoDividendoService:     ativoDividendoService,
 	}
@@ -86,11 +86,7 @@ func (s *AtivoInformacaoService) CreateInformacao(informacaoRequest request.Ativ
 		informacaoResponse.Endividamento = endividamento
 	}
 
-	eficiencia, err := s.createEficiencia(informacaoPersisted)
-	if err == nil {
-		informacaoResponse.Eficiencia = eficiencia
-	}
-
+	informacaoResponse.Eficiencia, _ = s.ativoEficienciaService.CreateAtivoEficiencia(informacaoPersisted)
 	informacaoResponse.Rentabilidade, _ = s.ativoRentabilidadeService.CreateAtivoRentabilidade(informacaoPersisted)
 	informacaoResponse.Dividendo, _ = s.ativoDividendoService.CreateAtivoDividendo(informacaoPersisted, cotacao.Valor)
 
@@ -119,14 +115,4 @@ func (s *AtivoInformacaoService) createEndividamento(informacao model.AtivoInfor
 	}
 
 	return mapper.ToAtivoEndividamentoResponse(endividamentoPersisted), err
-}
-
-func (s *AtivoInformacaoService) createEficiencia(informacao model.AtivoInformacao) (response.AtivoEficienciaResponse, error) {
-	eficiencia := mapper.ToAtivoEficiencia(informacao)
-	eficienciaPersisted, err := s.eficienciaRep.CreateEficiencia(eficiencia)
-	if err != nil {
-		return response.AtivoEficienciaResponse{}, err
-	}
-
-	return mapper.ToAtivoEficienciaResponse(eficienciaPersisted), err
 }

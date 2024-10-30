@@ -73,6 +73,11 @@ func createCarteiraHandler(
 	return *NewCarteiraHandler(service)
 }
 
+func createAtivoEficienciaService(db *gorm.DB) *service.AtivoEficienciaService {
+	eficienciaRepo := repository.NewAtivoEficienciaRepository(db)
+	return service.NewAtivoEficienciaService(eficienciaRepo)
+}
+
 func createAtivoRentabilidadeService(db *gorm.DB) *service.AtivoRentabilidadeService {
 	rentabilidadeRepo := repository.NewAtivoRentabilidadeRepository(db)
 	return service.NewAtivoRentabilidadeService(rentabilidadeRepo)
@@ -92,10 +97,10 @@ func createAtivoHandlerHandler(
 	cotacaoRepo := repository.NewCotacaoHistoricoRepository(db)
 	valuationRepo := repository.NewAtivoValuationRepository(db)
 	endividamentoRepo := repository.NewAtivoEndividamentoRepository(db)
-	eficienciaRepo := repository.NewAtivoEficienciaRepository(db)
+	ativoEficienciaService := createAtivoEficienciaService(db)
 	ativoRentabilidadeService := createAtivoRentabilidadeService(db)
 	ativoDividendoService := createAtivoDividendoService(db)
-	service := service.NewAtivoInformacaoService(repo, cotacaoRepo, valuationRepo, endividamentoRepo, eficienciaRepo, ativoRentabilidadeService, ativoDividendoService)
+	service := service.NewAtivoInformacaoService(repo, cotacaoRepo, valuationRepo, endividamentoRepo, ativoEficienciaService, ativoRentabilidadeService, ativoDividendoService)
 	return *NewAtivoInformacaoHandler(service)
 }
 
