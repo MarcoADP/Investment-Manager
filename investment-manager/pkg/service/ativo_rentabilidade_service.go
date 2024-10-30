@@ -24,3 +24,12 @@ func (s *AtivoRentabilidadeService) CreateAtivoRentabilidade(informacao model.At
 
 	return mapper.ToAtivoRentabilidadeResponse(rentabilidadePersisted), err
 }
+
+func (s *AtivoRentabilidadeService) GetAtivoRentabilidadeByInformacaoID(ativoInformacaoId uint) (response.AtivoRentabilidadeResponse, error) {
+	ativoRentabilidade, err := s.repo.GetRentabilidadeByAtivoInformacao(ativoInformacaoId)
+	if err != nil {
+		return response.AtivoRentabilidadeResponse{}, err
+	}
+
+	return mapper.ToAtivoRentabilidadeResponse(ativoRentabilidade), err
+}

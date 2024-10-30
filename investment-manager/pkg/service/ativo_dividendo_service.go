@@ -55,3 +55,12 @@ func (s *AtivoDividendoService) CreateAtivoDividendo(informacao model.AtivoInfor
 
 	return mapper.ToAtivoDividendoResponse(dividendoPersisted), err
 }
+
+func (s *AtivoDividendoService) GetAtivoDividendoByInformacaoID(ativoInformacaoId uint) (response.AtivoDividendoResponse, error) {
+	ativoDividendo, err := s.repo.GetDividendoByAtivoInformacao(ativoInformacaoId)
+	if err != nil {
+		return response.AtivoDividendoResponse{}, err
+	}
+
+	return mapper.ToAtivoDividendoResponse(ativoDividendo), err
+}

@@ -21,6 +21,14 @@ func (r *AtivoRentabilidadeRepository) GetRentabilidadesByCodigo(codigo string) 
 	return rentabilidades, nil
 }
 
+func (r *AtivoRentabilidadeRepository) GetRentabilidadeByAtivoInformacao(ativoInformacaoId uint) (model.AtivoRentabilidade, error) {
+	var ativoRentabilidade model.AtivoRentabilidade
+	if err := r.db.Where("ativo_informacao_id = ?", ativoInformacaoId).First(&ativoRentabilidade).Error; err != nil {
+		return model.AtivoRentabilidade{}, err
+	}
+	return ativoRentabilidade, nil
+}
+
 func (r *AtivoRentabilidadeRepository) GetRentabilidadeMoreRecentByCodigo(codigo string) (model.AtivoRentabilidade, error) {
 	var rentabilidade model.AtivoRentabilidade
 	if err := r.db.Where("codigo = ?", codigo).Order("data_calculo DESC").First(&rentabilidade).Error; err != nil {

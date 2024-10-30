@@ -21,6 +21,14 @@ func (r *AtivoDividendoRepository) GetDividendosByCodigo(codigo string) ([]model
 	return dividendos, nil
 }
 
+func (r *AtivoDividendoRepository) GetDividendoByAtivoInformacao(ativoInformacaoId uint) (model.AtivoDividendo, error) {
+	var ativoDividendo model.AtivoDividendo
+	if err := r.db.Where("ativo_informacao_id = ?", ativoInformacaoId).First(&ativoDividendo).Error; err != nil {
+		return model.AtivoDividendo{}, err
+	}
+	return ativoDividendo, nil
+}
+
 func (r *AtivoDividendoRepository) GetDividendoMoreRecentByCodigo(codigo string) (model.AtivoDividendo, error) {
 	var dividendo model.AtivoDividendo
 	if err := r.db.Where("codigo = ?", codigo).Order("data_calculo DESC").First(&dividendo).Error; err != nil {

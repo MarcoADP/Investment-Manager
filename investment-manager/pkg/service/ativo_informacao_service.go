@@ -107,5 +107,7 @@ func (s *AtivoInformacaoService) GetIndicadores(ativoInformacaoResponse response
 	ativoInformacaoResponse.Valuation, _ = s.ativoValuationService.GetAtivoValuationByInformacaoID(ativoInformacaoResponse.ID)
 	ativoInformacaoResponse.Endividamento, _ = s.ativoEndividamentoService.GetAtivoEndividamentoByInformacaoID(ativoInformacaoResponse.ID)
 	ativoInformacaoResponse.Eficiencia, _ = s.ativoEficienciaService.GetAtivoEficienciaByInformacaoID(ativoInformacaoResponse.ID)
+	ativoInformacaoResponse.Rentabilidade, _ = s.ativoRentabilidadeService.GetAtivoRentabilidadeByInformacaoID(ativoInformacaoResponse.ID)
+	ativoInformacaoResponse.Dividendo, _ = s.ativoDividendoService.GetAtivoDividendoByInformacaoID(ativoInformacaoResponse.ID)
 	return ativoInformacaoResponse
 }
