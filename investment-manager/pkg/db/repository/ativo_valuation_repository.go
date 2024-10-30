@@ -21,6 +21,14 @@ func (r *AtivoValuationRepository) GetValuationsByCodigo(codigo string) ([]model
 	return valuations, nil
 }
 
+func (r *AtivoValuationRepository) GetValuationByAtivoInformacao(ativoInformacaoId uint) (model.AtivoValuation, error) {
+	var valuation model.AtivoValuation
+	if err := r.db.Where("ativo_informacao_id = ?", ativoInformacaoId).First(&valuation).Error; err != nil {
+		return model.AtivoValuation{}, err
+	}
+	return valuation, nil
+}
+
 func (r *AtivoValuationRepository) GetValuationMoreRecentByCodigo(codigo string) (model.AtivoValuation, error) {
 	var valuation model.AtivoValuation
 	if err := r.db.Where("codigo = ?", codigo).Order("data_calculo DESC").First(&valuation).Error; err != nil {

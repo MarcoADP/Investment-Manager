@@ -43,7 +43,19 @@ func (s *AtivoInformacaoService) GetInformacoesByCodigo(codigo string) ([]respon
 		return []response.AtivoInformacaoResponse{}, err
 	}
 
-	return mapper.ToAtivoInformacaoResponseArray(informacoes), err
+	var responses []response.AtivoInformacaoResponse
+	for _, value := range informacoes {
+		response := mapper.ToAtivoInformacaoResponse(value)
+		response = s.GetIndicadores(response)
+		responses = append(responses, response)
+	}
+
+	if responses == nil {
+		responses = []response.AtivoInformacaoResponse{}
+	}
+
+	return responses, err
+
 }
 
 func (s *AtivoInformacaoService) GetInformacaoMoreRecentByCodigo(codigo string) (response.AtivoInformacaoResponse, error) {
@@ -54,7 +66,10 @@ func (s *AtivoInformacaoService) GetInformacaoMoreRecentByCodigo(codigo string) 
 		return response.AtivoInformacaoResponse{}, err
 	}
 
-	return mapper.ToAtivoInformacaoResponse(informacao), err
+	response := mapper.ToAtivoInformacaoResponse(informacao)
+	response = s.GetIndicadores(response)
+
+	return response, err
 }
 
 func (s *AtivoInformacaoService) CreateInformacao(informacaoRequest request.AtivoInformacaoRequest) (response.AtivoInformacaoResponse, error) {
@@ -86,4 +101,9 @@ func (s *AtivoInformacaoService) CreateInformacao(informacaoRequest request.Ativ
 
 func (s *AtivoInformacaoService) DeleteInformacao(id uint) error {
 	return s.repo.DeleteInformacao(id)
+}
+
+func (s *AtivoInformacaoService) GetIndicadores(ativoInformacaoResponse response.AtivoInformacaoResponse) response.AtivoInformacaoResponse {
+	ativoInformacaoResponse.Valuation, _ = s.ativoValuationService.GetAtivoValuationByInformacaoID(ativoInformacaoResponse.ID)
+	return ativoInformacaoResponse
 }

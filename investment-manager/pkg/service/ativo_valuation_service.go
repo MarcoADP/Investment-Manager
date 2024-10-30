@@ -24,3 +24,12 @@ func (s *AtivoValuationService) CreateAtivoValuation(informacao model.AtivoInfor
 
 	return mapper.ToAtivoValuationResponse(valuationPersisted), err
 }
+
+func (s *AtivoValuationService) GetAtivoValuationByInformacaoID(ativoInformacaoId uint) (response.AtivoValuationResponse, error) {
+	valuation, err := s.repo.GetValuationByAtivoInformacao(ativoInformacaoId)
+	if err != nil {
+		return response.AtivoValuationResponse{}, err
+	}
+
+	return mapper.ToAtivoValuationResponse(valuation), err
+}
