@@ -3,7 +3,6 @@ package service
 import (
 	"github.com/MarcoADP/Investment-Manager/pkg/api/v1/request"
 	"github.com/MarcoADP/Investment-Manager/pkg/api/v1/response"
-	"github.com/MarcoADP/Investment-Manager/pkg/db/model"
 	"github.com/MarcoADP/Investment-Manager/pkg/db/repository"
 	"github.com/MarcoADP/Investment-Manager/pkg/mapper"
 )
@@ -11,7 +10,7 @@ import (
 type AtivoInformacaoService struct {
 	repo                      *repository.AtivoInformacaoRepository
 	cotacaoRep                *repository.CotacaoHistoricoRepository
-	valuationRep              *repository.AtivoValuationRepository
+	ativoValuationService     *AtivoValuationService
 	ativoEndividamentoService *AtivoEndividamentoService
 	ativoEficienciaService    *AtivoEficienciaService
 	ativoRentabilidadeService *AtivoRentabilidadeService
@@ -20,7 +19,7 @@ type AtivoInformacaoService struct {
 
 func NewAtivoInformacaoService(repo *repository.AtivoInformacaoRepository,
 	cotacaoRep *repository.CotacaoHistoricoRepository,
-	valuationRep *repository.AtivoValuationRepository,
+	ativoValuationService *AtivoValuationService,
 	ativoEndividamentoService *AtivoEndividamentoService,
 	ativoEficienciaService *AtivoEficienciaService,
 	ativoRentabilidadeService *AtivoRentabilidadeService,
@@ -29,7 +28,7 @@ func NewAtivoInformacaoService(repo *repository.AtivoInformacaoRepository,
 	return &AtivoInformacaoService{
 		repo:                      repo,
 		cotacaoRep:                cotacaoRep,
-		valuationRep:              valuationRep,
+		ativoValuationService:     ativoValuationService,
 		ativoEndividamentoService: ativoEndividamentoService,
 		ativoEficienciaService:    ativoEficienciaService,
 		ativoRentabilidadeService: ativoRentabilidadeService,
@@ -76,11 +75,7 @@ func (s *AtivoInformacaoService) CreateInformacao(informacaoRequest request.Ativ
 		return informacaoResponse, err
 	}
 
-	valuation, err := s.createValuation(informacaoPersisted, cotacao.Valor)
-	if err == nil {
-		informacaoResponse.Valuation = valuation
-	}
-
+	informacaoResponse.Valuation, _ = s.ativoValuationService.CreateAtivoValuation(informacaoPersisted, cotacao.Valor)
 	informacaoResponse.Endividamento, _ = s.ativoEndividamentoService.CreateAtivoEndividamento(informacaoPersisted)
 	informacaoResponse.Eficiencia, _ = s.ativoEficienciaService.CreateAtivoEficiencia(informacaoPersisted)
 	informacaoResponse.Rentabilidade, _ = s.ativoRentabilidadeService.CreateAtivoRentabilidade(informacaoPersisted)
@@ -91,14 +86,4 @@ func (s *AtivoInformacaoService) CreateInformacao(informacaoRequest request.Ativ
 
 func (s *AtivoInformacaoService) DeleteInformacao(id uint) error {
 	return s.repo.DeleteInformacao(id)
-}
-
-func (s *AtivoInformacaoService) createValuation(informacao model.AtivoInformacao, valor float64) (response.AtivoValuationResponse, error) {
-	valuation := mapper.ToAtivoValuation(informacao, valor)
-	valuationPersisted, err := s.valuationRep.CreateValuation(valuation)
-	if err != nil {
-		return response.AtivoValuationResponse{}, err
-	}
-
-	return mapper.ToAtivoValuationResponse(valuationPersisted), err
 }
