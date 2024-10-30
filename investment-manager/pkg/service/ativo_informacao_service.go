@@ -9,13 +9,13 @@ import (
 )
 
 type AtivoInformacaoService struct {
-	repo                  *repository.AtivoInformacaoRepository
-	cotacaoRep            *repository.CotacaoHistoricoRepository
-	valuationRep          *repository.AtivoValuationRepository
-	endividamentoRep      *repository.AtivoEndividamentoRepository
-	eficienciaRep         *repository.AtivoEficienciaRepository
-	rentabilidadeRep      *repository.AtivoRentabilidadeRepository
-	ativoDividendoService *AtivoDividendoService
+	repo                      *repository.AtivoInformacaoRepository
+	cotacaoRep                *repository.CotacaoHistoricoRepository
+	valuationRep              *repository.AtivoValuationRepository
+	endividamentoRep          *repository.AtivoEndividamentoRepository
+	eficienciaRep             *repository.AtivoEficienciaRepository
+	ativoRentabilidadeService *AtivoRentabilidadeService
+	ativoDividendoService     *AtivoDividendoService
 }
 
 func NewAtivoInformacaoService(repo *repository.AtivoInformacaoRepository,
@@ -23,17 +23,17 @@ func NewAtivoInformacaoService(repo *repository.AtivoInformacaoRepository,
 	valuationRep *repository.AtivoValuationRepository,
 	endividamentoRep *repository.AtivoEndividamentoRepository,
 	eficienciaRep *repository.AtivoEficienciaRepository,
-	rentabilidadeRep *repository.AtivoRentabilidadeRepository,
+	ativoRentabilidadeService *AtivoRentabilidadeService,
 	ativoDividendoService *AtivoDividendoService,
 ) *AtivoInformacaoService {
 	return &AtivoInformacaoService{
-		repo:                  repo,
-		cotacaoRep:            cotacaoRep,
-		valuationRep:          valuationRep,
-		endividamentoRep:      endividamentoRep,
-		eficienciaRep:         eficienciaRep,
-		rentabilidadeRep:      rentabilidadeRep,
-		ativoDividendoService: ativoDividendoService,
+		repo:                      repo,
+		cotacaoRep:                cotacaoRep,
+		valuationRep:              valuationRep,
+		endividamentoRep:          endividamentoRep,
+		eficienciaRep:             eficienciaRep,
+		ativoRentabilidadeService: ativoRentabilidadeService,
+		ativoDividendoService:     ativoDividendoService,
 	}
 }
 
@@ -91,12 +91,8 @@ func (s *AtivoInformacaoService) CreateInformacao(informacaoRequest request.Ativ
 		informacaoResponse.Eficiencia = eficiencia
 	}
 
-	rentabilidade, err := s.createRentabilidade(informacaoPersisted)
-	if err == nil {
-		informacaoResponse.Rentabilidade = rentabilidade
-	}
-
-	informacaoResponse.Dividendo, err = s.ativoDividendoService.CreateAtivoDividendo(informacaoPersisted, cotacao.Valor)
+	informacaoResponse.Rentabilidade, _ = s.ativoRentabilidadeService.CreateAtivoRentabilidade(informacaoPersisted)
+	informacaoResponse.Dividendo, _ = s.ativoDividendoService.CreateAtivoDividendo(informacaoPersisted, cotacao.Valor)
 
 	return informacaoResponse, err
 }
@@ -133,14 +129,4 @@ func (s *AtivoInformacaoService) createEficiencia(informacao model.AtivoInformac
 	}
 
 	return mapper.ToAtivoEficienciaResponse(eficienciaPersisted), err
-}
-
-func (s *AtivoInformacaoService) createRentabilidade(informacao model.AtivoInformacao) (response.AtivoRentabilidadeResponse, error) {
-	rentabilidade := mapper.ToAtivoRentabilidade(informacao)
-	rentabilidadePersisted, err := s.rentabilidadeRep.CreateRentabilidade(rentabilidade)
-	if err != nil {
-		return response.AtivoRentabilidadeResponse{}, err
-	}
-
-	return mapper.ToAtivoRentabilidadeResponse(rentabilidadePersisted), err
 }

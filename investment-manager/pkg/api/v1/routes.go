@@ -73,6 +73,18 @@ func createCarteiraHandler(
 	return *NewCarteiraHandler(service)
 }
 
+func createAtivoRentabilidadeService(db *gorm.DB) *service.AtivoRentabilidadeService {
+	rentabilidadeRepo := repository.NewAtivoRentabilidadeRepository(db)
+	return service.NewAtivoRentabilidadeService(rentabilidadeRepo)
+}
+
+func createAtivoDividendoService(db *gorm.DB) *service.AtivoDividendoService {
+	ativoDividendoRep := repository.NewAtivoDividendoRepository(db)
+	dividendosRep := repository.NewDividendoRepository(db)
+	consolidadeRep := repository.NewConsolidacaoRepository(db)
+	return service.NewAtivoDividendoService(ativoDividendoRep, dividendosRep, consolidadeRep)
+}
+
 func createAtivoHandlerHandler(
 	db *gorm.DB,
 ) AtivoInformacaoHandler {
@@ -81,12 +93,9 @@ func createAtivoHandlerHandler(
 	valuationRepo := repository.NewAtivoValuationRepository(db)
 	endividamentoRepo := repository.NewAtivoEndividamentoRepository(db)
 	eficienciaRepo := repository.NewAtivoEficienciaRepository(db)
-	rentabilidadeRepo := repository.NewAtivoRentabilidadeRepository(db)
-	ativoDividendoRep := repository.NewAtivoDividendoRepository(db)
-	dividendosRep := repository.NewDividendoRepository(db)
-	consolidadeRep := repository.NewConsolidacaoRepository(db)
-	ativoDividendoService := service.NewAtivoDividendoService(ativoDividendoRep, dividendosRep, consolidadeRep)
-	service := service.NewAtivoInformacaoService(repo, cotacaoRepo, valuationRepo, endividamentoRepo, eficienciaRepo, rentabilidadeRepo, ativoDividendoService)
+	ativoRentabilidadeService := createAtivoRentabilidadeService(db)
+	ativoDividendoService := createAtivoDividendoService(db)
+	service := service.NewAtivoInformacaoService(repo, cotacaoRepo, valuationRepo, endividamentoRepo, eficienciaRepo, ativoRentabilidadeService, ativoDividendoService)
 	return *NewAtivoInformacaoHandler(service)
 }
 
