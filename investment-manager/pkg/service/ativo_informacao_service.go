@@ -12,7 +12,7 @@ type AtivoInformacaoService struct {
 	repo                      *repository.AtivoInformacaoRepository
 	cotacaoRep                *repository.CotacaoHistoricoRepository
 	valuationRep              *repository.AtivoValuationRepository
-	endividamentoRep          *repository.AtivoEndividamentoRepository
+	ativoEndividamentoService *AtivoEndividamentoService
 	ativoEficienciaService    *AtivoEficienciaService
 	ativoRentabilidadeService *AtivoRentabilidadeService
 	ativoDividendoService     *AtivoDividendoService
@@ -21,7 +21,7 @@ type AtivoInformacaoService struct {
 func NewAtivoInformacaoService(repo *repository.AtivoInformacaoRepository,
 	cotacaoRep *repository.CotacaoHistoricoRepository,
 	valuationRep *repository.AtivoValuationRepository,
-	endividamentoRep *repository.AtivoEndividamentoRepository,
+	ativoEndividamentoService *AtivoEndividamentoService,
 	ativoEficienciaService *AtivoEficienciaService,
 	ativoRentabilidadeService *AtivoRentabilidadeService,
 	ativoDividendoService *AtivoDividendoService,
@@ -30,7 +30,7 @@ func NewAtivoInformacaoService(repo *repository.AtivoInformacaoRepository,
 		repo:                      repo,
 		cotacaoRep:                cotacaoRep,
 		valuationRep:              valuationRep,
-		endividamentoRep:          endividamentoRep,
+		ativoEndividamentoService: ativoEndividamentoService,
 		ativoEficienciaService:    ativoEficienciaService,
 		ativoRentabilidadeService: ativoRentabilidadeService,
 		ativoDividendoService:     ativoDividendoService,
@@ -81,11 +81,7 @@ func (s *AtivoInformacaoService) CreateInformacao(informacaoRequest request.Ativ
 		informacaoResponse.Valuation = valuation
 	}
 
-	endividamento, err := s.createEndividamento(informacaoPersisted)
-	if err == nil {
-		informacaoResponse.Endividamento = endividamento
-	}
-
+	informacaoResponse.Endividamento, _ = s.ativoEndividamentoService.CreateAtivoEndividamento(informacaoPersisted)
 	informacaoResponse.Eficiencia, _ = s.ativoEficienciaService.CreateAtivoEficiencia(informacaoPersisted)
 	informacaoResponse.Rentabilidade, _ = s.ativoRentabilidadeService.CreateAtivoRentabilidade(informacaoPersisted)
 	informacaoResponse.Dividendo, _ = s.ativoDividendoService.CreateAtivoDividendo(informacaoPersisted, cotacao.Valor)
@@ -105,14 +101,4 @@ func (s *AtivoInformacaoService) createValuation(informacao model.AtivoInformaca
 	}
 
 	return mapper.ToAtivoValuationResponse(valuationPersisted), err
-}
-
-func (s *AtivoInformacaoService) createEndividamento(informacao model.AtivoInformacao) (response.AtivoEndividamentoResponse, error) {
-	endividamento := mapper.ToAtivoEndividamento(informacao)
-	endividamentoPersisted, err := s.endividamentoRep.CreateEndividamento(endividamento)
-	if err != nil {
-		return response.AtivoEndividamentoResponse{}, err
-	}
-
-	return mapper.ToAtivoEndividamentoResponse(endividamentoPersisted), err
 }
