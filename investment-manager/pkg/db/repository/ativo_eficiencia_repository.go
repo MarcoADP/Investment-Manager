@@ -21,6 +21,14 @@ func (r *AtivoEficienciaRepository) GetEficienciasByCodigo(codigo string) ([]mod
 	return eficiencias, nil
 }
 
+func (r *AtivoEficienciaRepository) GetEficienciaByAtivoInformacao(ativoInformacaoId uint) (model.AtivoEficiencia, error) {
+	var ativoEficiencia model.AtivoEficiencia
+	if err := r.db.Where("ativo_informacao_id = ?", ativoInformacaoId).First(&ativoEficiencia).Error; err != nil {
+		return model.AtivoEficiencia{}, err
+	}
+	return ativoEficiencia, nil
+}
+
 func (r *AtivoEficienciaRepository) GetEficienciaMoreRecentByCodigo(codigo string) (model.AtivoEficiencia, error) {
 	var eficiencia model.AtivoEficiencia
 	if err := r.db.Where("codigo = ?", codigo).Order("data_calculo DESC").First(&eficiencia).Error; err != nil {

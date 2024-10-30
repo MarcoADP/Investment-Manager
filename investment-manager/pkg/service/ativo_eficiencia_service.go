@@ -24,3 +24,12 @@ func (s *AtivoEficienciaService) CreateAtivoEficiencia(informacao model.AtivoInf
 
 	return mapper.ToAtivoEficienciaResponse(eficienciaPersisted), err
 }
+
+func (s *AtivoEficienciaService) GetAtivoEficienciaByInformacaoID(ativoInformacaoId uint) (response.AtivoEficienciaResponse, error) {
+	ativoEficiencia, err := s.repo.GetEficienciaByAtivoInformacao(ativoInformacaoId)
+	if err != nil {
+		return response.AtivoEficienciaResponse{}, err
+	}
+
+	return mapper.ToAtivoEficienciaResponse(ativoEficiencia), err
+}
