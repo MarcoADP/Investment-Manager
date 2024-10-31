@@ -805,6 +805,48 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/comparador": {
+            "get": {
+                "description": "Compare List of Acoes",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "acoes"
+                ],
+                "summary": "Compare List of Acoes",
+                "parameters": [
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Lista de Códigos das Ações",
+                        "name": "codigos",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.AcaoBrComparadorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/consolidacoes": {
             "get": {
                 "description": "Get All consolidacao BR",
@@ -831,7 +873,7 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -863,13 +905,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -907,7 +949,7 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -1215,7 +1257,7 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -1253,13 +1295,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -1300,7 +1342,7 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -1338,13 +1380,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -1755,13 +1797,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -1802,7 +1844,7 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -1840,7 +1882,7 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -1878,13 +1920,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -1924,7 +1966,7 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -1964,13 +2006,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -2010,13 +2052,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -2054,7 +2096,7 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -2090,13 +2132,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse"
+                            "$ref": "#/definitions/pkg_api_v1.ErrorResponse"
                         }
                     }
                 }
@@ -2258,6 +2300,35 @@ const docTemplate = `{
                 },
                 "valorUnitario": {
                     "type": "number"
+                }
+            }
+        },
+        "github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.AcaoBrComparadorResponse": {
+            "type": "object",
+            "properties": {
+                "codigo": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "dividendo": {
+                    "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorDividendoResponse"
+                },
+                "eficiencia": {
+                    "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorEficienciaResponse"
+                },
+                "endividamento": {
+                    "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorEndividamentoResponse"
+                },
+                "informacao": {
+                    "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorInformacaoResponse"
+                },
+                "rentabilidade": {
+                    "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorRentabilidadeResponse"
+                },
+                "valuation": {
+                    "$ref": "#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorValuationResponse"
                 }
             }
         },
@@ -2548,6 +2619,297 @@ const docTemplate = `{
                 },
                 "proporcaoDesejada": {
                     "type": "number"
+                }
+            }
+        },
+        "github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorDividendoResponse": {
+            "type": "object",
+            "properties": {
+                "dividendos": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "dy": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "yoc": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        },
+        "github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorEficienciaResponse": {
+            "type": "object",
+            "properties": {
+                "margemBruta": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "margemEbit": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "margemEbitda": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "margemLiquida": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        },
+        "github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorEndividamentoResponse": {
+            "type": "object",
+            "properties": {
+                "dividaEbit": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "dividaEbitda": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "dividaPatrimonioLiquido": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        },
+        "github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorInformacaoResponse": {
+            "type": "object",
+            "properties": {
+                "ativoTotal": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "dividaLiquida": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "ebit": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "ebitda": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "lucroBruto": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "lucroLiquido": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "patrimonioLiquido": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "receitaLiquida": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "valorFirma": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        },
+        "github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorRentabilidadeResponse": {
+            "type": "object",
+            "properties": {
+                "roa": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "roe": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        },
+        "github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorValuationResponse": {
+            "type": "object",
+            "properties": {
+                "evEbit": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "evEbitda": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "lpa": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "pebit": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "pebitda": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "pl": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "pvp": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "vpa": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
                 }
             }
         },

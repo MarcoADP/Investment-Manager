@@ -100,9 +100,7 @@ func createAtivoDividendoService(db *gorm.DB) *service.AtivoDividendoService {
 	return service.NewAtivoDividendoService(ativoDividendoRep, dividendosRep, consolidadeRep)
 }
 
-func createAtivoHandlerHandler(
-	db *gorm.DB,
-) AtivoInformacaoHandler {
+func createAtivoInformacaoService(db *gorm.DB) *service.AtivoInformacaoService {
 	repo := repository.NewAtivoInformacaoRepository(db)
 	cotacaoRepo := repository.NewCotacaoHistoricoRepository(db)
 	ativoValuationService := createAtivoValuationService(db)
@@ -110,8 +108,14 @@ func createAtivoHandlerHandler(
 	ativoEficienciaService := createAtivoEficienciaService(db)
 	ativoRentabilidadeService := createAtivoRentabilidadeService(db)
 	ativoDividendoService := createAtivoDividendoService(db)
-	service := service.NewAtivoInformacaoService(repo, cotacaoRepo, ativoValuationService, ativoEndividamentoService, ativoEficienciaService, ativoRentabilidadeService,
+	return service.NewAtivoInformacaoService(repo, cotacaoRepo, ativoValuationService, ativoEndividamentoService, ativoEficienciaService, ativoRentabilidadeService,
 		ativoDividendoService)
+}
+
+func createAtivoHandlerHandler(
+	db *gorm.DB,
+) AtivoInformacaoHandler {
+	service := createAtivoInformacaoService(db)
 	return *NewAtivoInformacaoHandler(service)
 }
 
@@ -131,6 +135,14 @@ func createGrahamFormulaHandler(
 	return *NewGrahamFormulaHandler(service)
 }
 
+func createAcaoBrComparadorHandler(
+	db *gorm.DB,
+) AcaoBrComparadorHandler {
+	ativoInformacaoService := createAtivoInformacaoService(db)
+	service := service.NewAcaoBrComparadorService(ativoInformacaoService)
+	return *NewAcaoBrComparadorHandler(service)
+}
+
 func CreateRoutes(db *gorm.DB) *gin.Engine {
 
 	router := gin.Default()
@@ -145,6 +157,7 @@ func CreateRoutes(db *gorm.DB) *gin.Engine {
 	ativoInformacaoHandler := createAtivoHandlerHandler(db)
 	dividendoHandler := createDividendoHandler(db)
 	grahamFormulaHandler := createGrahamFormulaHandler(db)
+	AcaoBrComparadorHandler := createAcaoBrComparadorHandler(db)
 
 	api := router.Group("/api/v1")
 	{
@@ -207,6 +220,8 @@ func CreateRoutes(db *gorm.DB) *gin.Engine {
 		api.GET("/graham-formula/:codigo/last", grahamFormulaHandler.GetGrahamFormulaMoreRecentByCodigo)
 		api.POST("/graham-formula", grahamFormulaHandler.CreateGrahamFormula)
 		api.DELETE("/graham-formula/:id", grahamFormulaHandler.DeleteGrahamFormula)
+
+		api.GET("/comparador", AcaoBrComparadorHandler.CompareAcoesBr)
 	}
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

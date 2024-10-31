@@ -101,6 +101,25 @@ definitions:
       valorUnitario:
         type: number
     type: object
+  github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.AcaoBrComparadorResponse:
+    properties:
+      codigo:
+        items:
+          type: string
+        type: array
+      dividendo:
+        $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorDividendoResponse'
+      eficiencia:
+        $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorEficienciaResponse'
+      endividamento:
+        $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorEndividamentoResponse'
+      informacao:
+        $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorInformacaoResponse'
+      rentabilidade:
+        $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorRentabilidadeResponse'
+      valuation:
+        $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorValuationResponse'
+    type: object
   github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.AcaoBrResponse:
     properties:
       cnpj:
@@ -290,6 +309,198 @@ definitions:
         type: string
       proporcaoDesejada:
         type: number
+    type: object
+  github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorDividendoResponse:
+    properties:
+      dividendos:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+      dy:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+      yoc:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+    type: object
+  github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorEficienciaResponse:
+    properties:
+      margemBruta:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+      margemEbit:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+      margemEbitda:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+      margemLiquida:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+    type: object
+  github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorEndividamentoResponse:
+    properties:
+      dividaEbit:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+      dividaEbitda:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+      dividaPatrimonioLiquido:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+    type: object
+  github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorInformacaoResponse:
+    properties:
+      ativoTotal:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+      dividaLiquida:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+      ebit:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+      ebitda:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+      lucroBruto:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+      lucroLiquido:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+      patrimonioLiquido:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+      receitaLiquida:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+      valorFirma:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+    type: object
+  github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorRentabilidadeResponse:
+    properties:
+      roa:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+      roe:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+    type: object
+  github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ComparadorValuationResponse:
+    properties:
+      evEbit:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+      evEbitda:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+      lpa:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+      pebit:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+      pebitda:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+      pl:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+      pvp:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
+      vpa:
+        items:
+          additionalProperties:
+            type: number
+          type: object
+        type: array
     type: object
   github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.ConsolidacaoResponse:
     properties:
@@ -931,6 +1142,34 @@ paths:
       summary: Delete a carteira
       tags:
       - carteiras
+  /api/v1/comparador:
+    get:
+      consumes:
+      - application/json
+      description: Compare List of Acoes
+      parameters:
+      - collectionFormat: csv
+        description: Lista de Códigos das Ações
+        in: query
+        items:
+          type: string
+        name: codigos
+        required: true
+        type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1_response.AcaoBrComparadorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+      summary: Compare List of Acoes
+      tags:
+      - acoes
   /api/v1/consolidacoes:
     get:
       consumes:
@@ -948,7 +1187,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
       summary: Get All consolidacao BR
       tags:
       - consolidacoes
@@ -973,7 +1212,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
       summary: Get a consolidacao BR
       tags:
       - consolidacoes
@@ -994,11 +1233,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
       summary: Calcular a consolidacao
       tags:
       - consolidacoes
@@ -1201,7 +1440,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get All Dividendo
       tags:
       - dividendos
@@ -1226,11 +1465,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Create a dividendo
       tags:
       - dividendos
@@ -1257,7 +1496,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get dividendos pelo codigo
       tags:
       - dividendos
@@ -1282,11 +1521,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Delete a dividendo
       tags:
       - dividendos
@@ -1557,11 +1796,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Criar a informacao
       tags:
       - informacoes
@@ -1588,7 +1827,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get a informacao
       tags:
       - informacoes
@@ -1613,7 +1852,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get a informacao
       tags:
       - informacoes
@@ -1638,11 +1877,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Delete a Informacao
       tags:
       - informacoes
@@ -1668,7 +1907,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get All movimentacao BR
       tags:
       - movimentacoes
@@ -1693,11 +1932,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Delete a movimentacao
       tags:
       - movimentacoes
@@ -1721,7 +1960,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Get a movimentacao BR
       tags:
       - movimentacoes
@@ -1747,11 +1986,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Create a movimentacao de entrada
       tags:
       - movimentacoes
@@ -1777,11 +2016,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/github_com_MarcoADP_Investment-Manager_pkg_api_v1.ErrorResponse'
+            $ref: '#/definitions/pkg_api_v1.ErrorResponse'
       summary: Create a movimentacao de saida
       tags:
       - movimentacoes
