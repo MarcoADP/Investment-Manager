@@ -28,7 +28,14 @@ func NewAtivoValuation(ativoInformacao AtivoInformacao, preco float64) *AtivoVal
 	lpa := ativoInformacao.LucroLiquido / float64(ativoInformacao.NumeroAcoes)
 	vpa := ativoInformacao.PatrimonioLiquido / float64(ativoInformacao.NumeroAcoes)
 	ebitPerAcao := ativoInformacao.Ebit / float64(ativoInformacao.NumeroAcoes)
-	ebitdaPerAcao := ativoInformacao.Ebitda / float64(ativoInformacao.NumeroAcoes)
+	evEbitda := 0.00
+	pEbitda := 0.0
+	if ativoInformacao.Ebitda != 0 {
+		ebitdaPerAcao := ativoInformacao.Ebitda / float64(ativoInformacao.NumeroAcoes)
+		evEbitda = ativoInformacao.ValorFirma / ativoInformacao.Ebitda
+		pEbitda = preco / ebitdaPerAcao
+	}
+
 	return &AtivoValuation{
 		AtivoInformacaoId: ativoInformacao.ID,
 		DataCalculo:       ativoInformacao.DataInformacao,
@@ -39,8 +46,8 @@ func NewAtivoValuation(ativoInformacao AtivoInformacao, preco float64) *AtivoVal
 		PVP:               roundNumbers(preco/vpa, 2.0),
 		EvEbit:            roundNumbers(ativoInformacao.ValorFirma/ativoInformacao.Ebit, 2.0),
 		PEbit:             roundNumbers(preco/ebitPerAcao, 2.0),
-		EvEbitda:          roundNumbers(ativoInformacao.ValorFirma/ativoInformacao.Ebitda, 2.0),
-		PEbitda:           roundNumbers(preco/ebitdaPerAcao, 2.0),
+		EvEbitda:          roundNumbers(evEbitda, 2.0),
+		PEbitda:           roundNumbers(pEbitda, 2.0),
 	}
 }
 

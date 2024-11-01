@@ -19,12 +19,16 @@ func (AtivoEndividamento) TableName() string {
 }
 
 func NewAtivoEndividamento(ativoInformacao AtivoInformacao) *AtivoEndividamento {
+	dividaEbitda := 0.0
+	if ativoInformacao.Ebitda != 0 {
+		dividaEbitda = ativoInformacao.DividaLiquida / ativoInformacao.Ebitda
+	}
 	return &AtivoEndividamento{
 		AtivoInformacaoId:       ativoInformacao.ID,
 		DataCalculo:             ativoInformacao.DataInformacao,
 		Codigo:                  ativoInformacao.Codigo,
 		DividaPatrimonioLiquido: roundNumbers(ativoInformacao.DividaLiquida/ativoInformacao.PatrimonioLiquido, 2.0),
 		DividaEbit:              roundNumbers(ativoInformacao.DividaLiquida/ativoInformacao.Ebit, 2.0),
-		DividaEbitda:            roundNumbers(ativoInformacao.DividaLiquida/ativoInformacao.Ebitda, 2.0),
+		DividaEbitda:            roundNumbers(float64(dividaEbitda), 2.0),
 	}
 }
