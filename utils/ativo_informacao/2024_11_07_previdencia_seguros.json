@@ -1,0 +1,6 @@
+[
+	{"body":{"dataInformacao": "07/11/2024", "codigo": "BBSE3", "numeroAcoes": 2000000000, "valorFirma": 63173875000, "ativoTotal": 19213887000, "lucroLiquido": 8515981000, "lucroBruto": 0, "receitaLiquida": 0, "patrimonioLiquido": 12251901000, "dividaLiquida": -6186125000, "ebit": 9598466000, "ebitda": 0}},
+	{"body":{"dataInformacao": "07/11/2024", "codigo": "CXSE3", "numeroAcoes": 3000000000, "valorFirma": 41864903000, "ativoTotal": 13700467000, "lucroLiquido": 3428768000, "lucroBruto": 0, "receitaLiquida": 0, "patrimonioLiquido": 12690432000, "dividaLiquida": -885097000, "ebit": 3841999000, "ebitda": 0}},
+	{"body":{"dataInformacao": "07/11/2024", "codigo": "PSSA3", "numeroAcoes": 646586000, "valorFirma": 13488576000, "ativoTotal": 44729733000, "lucroLiquido": 2522475000, "lucroBruto": 34559251000, "receitaLiquida": 34559251000, "patrimonioLiquido": 12897574000, "dividaLiquida": -11340328000, "ebit": 3303460000, "ebitda": 3696148000}},
+	{"body":{"dataInformacao": "07/11/2024", "codigo": "WIZC3", "numeroAcoes": 159907000, "valorFirma": 1019149000, "ativoTotal": 2532306000, "lucroLiquido": 294847000, "lucroBruto": 761486000, "receitaLiquida": 1208693000, "patrimonioLiquido": 549042000, "dividaLiquida": 78895000, "ebit": 524502000, "ebitda": 663523000}}
+]
